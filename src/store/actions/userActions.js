@@ -35,34 +35,76 @@ export const logout = () => (dispatch) => {
   // dispatch({ type: "USER_LIST_RESET" });
 };
 
-// export const register = (name, email, password) => async (dispatch) => {
-//   try {
-//     dispatch({ type: "USER_REGISTER_REQUEST" });
-//     const config = {
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     };
+export const register = (formik) => async (dispatch) => {
+  try {
+    dispatch({ type: "USER_REGISTER_REQUEST" });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
 
-//     const { data } = await axios.post(
-//       "http://localhost:5000/api/users",
-//       { name, email, password },
-//       config
-//     );
+    const { data } = await axios.post(
+      "https://gravitybites.in/api/stores/register-store",
+      {
+        fullName: formik.fullName,
+        storeName: formik.storeName,
+        phoneNo: formik.phoneNo,
+        address: {
+          streetName: formik.streetName,
+          streetNumber: formik.streetNumber,
+          city: formik.city,
+          countryCode: formik.countryCode,
+          stateCode: formik.streetCode,
+          zipcode: formik.zipcode,
+          latitude: formik.latitude,
+          longitude: formik.longitude,
+        },
+        email: formik.email,
+        password: formik.password,
+        cancelledCheque: formik.cancelledCheque,
+        uploadMenu: formik.uploadMenu,
+        uploadPan: formik.uploadPan,
+        licenseImage: formik.licenseImage,
+        expiryDate: formik.expiryDate,
+        uploadGSTcertificate: formik.uploadGSTcertificate,
+        storeImage: formik.storeImage,
+        active: formik.active,
+        whatsappUpdate: formik.whatsappUpdate,
+        cashback: formik.cashback,
+        terms: formik.terms,
+        policy: formik.policy,
+        gst: formik.gst,
+        ownerPan: formik.ownerPan,
+        bankName: formik.bankName,
+        accountHolder: formik.accountHolder,
+        accountNo: formik.accountNo,
+        ifsc: formik.ifsc,
+        upiId: formik.upiId,
+        storeManager: formik.storeManager,
+        categories: formik.categories,
+        services: formik.services,
+        liscenseNo: formik.liscenseNo,
+        licenseType: formik.licenseType,
+        openingTime: formik.openingTime,
+        closingTime: formik.closingTime,
+      },
+      config
+    );
 
-//     dispatch({ type: "USER_REGISTER_SUCCESS", payload: data });
-//     dispatch({
-//       type: "USER_LOGIN_SUCCESS",
-//       payload: data,
-//     });
-//   } catch (error) {
-//     dispatch({
-//       type: "USER_REGISTER_FAIL",
-//       payload:
-//         error.response && error.response.data.message ? error.response.data.message : error.message,
-//     });
-//   }
-// };
+    dispatch({ type: "USER_REGISTER_SUCCESS", payload: data });
+    dispatch({
+      type: "USER_LOGIN_SUCCESS",
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: "USER_REGISTER_FAIL",
+      payload:
+        error.response && error.response.data.message ? error.response.data.message : error.message,
+    });
+  }
+};
 
 // export const getUserDetails = (id) => async (dispatch, getState) => {
 //   try {
