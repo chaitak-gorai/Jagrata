@@ -7,19 +7,36 @@ import { Box, Button, Container, Grid, Link, TextField, Typography } from "@mui/
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Facebook as FacebookIcon } from "../icons/facebook";
 import { Google as GoogleIcon } from "../icons/google";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { login } from "src/store/actions/userActions";
 
 const Login = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { loading, error, userInfo } = userLogin;
+  const { redirect } = router.query;
+  useEffect(() => {
+    if (userInfo) {
+      if (redirect) {
+        router.push(`/${redirect}`);
+      } else {
+        router.push("/");
+      }
+    }
+  }, [userInfo, redirect]);
   const formik = useFormik({
     initialValues: {
-      email: "demo@devias.io",
-      password: "Password123",
+      email: "",
+      password: "",
     },
     validationSchema: Yup.object({
       email: Yup.string().email("Must be a valid email").max(255).required("Email is required"),
       password: Yup.string().max(255).required("Password is required"),
     }),
     onSubmit: () => {
+      dispatch(login(formik.values.email, formik.values.password));
       router.push("/");
     },
   });
