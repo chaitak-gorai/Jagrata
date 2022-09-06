@@ -1,8 +1,8 @@
 import Head from "next/head";
 import { Box, Container, Grid, Pagination } from "@mui/material";
-import { products } from "../__mocks__/products";
-import { ProductListToolbar } from "../components/product/product-list-toolbar";
-import { ProductCard } from "../components/product/product-card";
+import { coupons } from "../__mocks__/coupons";
+import { CouponListToolbar } from "../components/coupon/coupon-list-toolbar";
+import { CouponCard } from "../components/coupon/coupon-card";
 import { DashboardLayout } from "../components/dashboard-layout";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,7 +21,7 @@ const Coupons = () => {
   return (
     <>
       <Head>
-        <title>Products | Material Kit</title>
+        <title>Coupon | Material Kit</title>
       </Head>
       <Box
         component="main"
@@ -31,12 +31,12 @@ const Coupons = () => {
         }}
       >
         <Container maxWidth={false}>
-          <ProductListToolbar />
+          <CouponListToolbar />
           <Box sx={{ pt: 3 }}>
             <Grid container spacing={3}>
-              {products.map((product) => (
-                <Grid item key={product.id} lg={4} md={6} xs={12}>
-                  <ProductCard product={product} />
+              {coupons.map((coupon) => (
+                <Grid item key={coupon.id} lg={4} md={6} xs={12}>
+                  <CouponCard coupons={coupon} />
                 </Grid>
               ))}
             </Grid>
@@ -56,6 +56,6 @@ const Coupons = () => {
   );
 };
 
-Products.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+Coupons.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 export default Coupons;

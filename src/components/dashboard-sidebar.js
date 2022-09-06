@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import { Box, Button, Divider, Drawer, Typography, useMediaQuery } from "@mui/material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { ChartBar as ChartBarIcon } from "../icons/chart-bar";
@@ -33,8 +34,8 @@ const items = [
     title: "Products",
   },
   {
-    href: "/coupon",
-    icon: <XCircleIcon fontSize="small" />,
+    href: "/coupons",
+    icon: <LocalOfferIcon fontSize="small" />,
     title: "Coupons",
   },
   {
