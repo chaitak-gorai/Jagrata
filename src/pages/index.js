@@ -19,9 +19,9 @@ const Dashboard = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   useEffect(() => {
-    // if (!userInfo) {
-    //   router.push("/login");
-    // }
+    if (!userInfo) {
+      router.push("/login");
+    }
   }, [userInfo, dispatch]);
   return (
     <>
