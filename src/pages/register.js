@@ -641,7 +641,7 @@ const Register = () => {
               />
               <Typography color="textSecondary" variant="body2">
                 I have read the{" "}
-                <NextLink href="#" passHref>
+                <NextLink href="/terms" passHref>
                   <Link color="primary" underline="always" variant="subtitle2">
                     Terms and Conditions
                   </Link>
