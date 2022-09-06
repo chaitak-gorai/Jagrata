@@ -4,54 +4,76 @@ import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
+  Alert,
   Box,
   Button,
   Checkbox,
   Container,
   FormHelperText,
+  Formhelpertext,
   Grid,
   Link,
   TextField,
   Typography,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { register } from "src/store/actions/userActions";
+import { useDispatch, useSelector } from "react-redux";
 
 const Register = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
+
   const formik = useFormik({
     initialValues: {
-      email: "",
-      fullName: "",
-      storeName: "",
-      phoneNumber: "",
-      password: "",
-      streetName: "",
-      city: "",
-      stateCode: "",
-      zipcode: "",
-      countryCode: "",
-      cheque: "",
-      bankName: "",
-      accountNo: "",
-      accountHolder: "",
-      ifsc: "",
-      upiId: "",
-      storeManager: "",
-      categories: "",
-      services: "",
-      licenseNo: "",
-      licenseType: "",
-      openingTime: "",
-      closingTime: "",
-
-      policy: false,
+      fullName: "Kunal Shah",
+      storeName: "Kunal General Store",
+      phoneNo: "9000012530",
+      streetName: "Gorai",
+      streetNumber: "A-8",
+      city: "Mumbai",
+      countryCode: "India",
+      stateCode: "MH",
+      zipcode: "400092",
+      latitude: "19.232328",
+      longitude: "72.805127",
+      email: "kunal@example.com",
+      password: "Kunal@567",
+      cancelledCheque: "/uploads/docu.jpg",
+      uploadMenu: "/uploads/docu.jpg",
+      uploadPan: "/uploads/docu.jpg",
+      licenseImage: "/uploads/docu.jpg",
+      expiryDate: "02/05/2022",
+      uploadGSTcertificate: "/uploads/docu.jpg",
+      storeImage: "/uploads/docu.jpg",
+      active: true,
+      whatsappUpdate: true,
+      cashback: 2,
+      terms: true,
+      policy: true,
+      gst: "250000478965214",
+      ownerPan: "6400000964",
+      bankName: "AXIS",
+      accountHolder: "Kunal Shah",
+      accountNo: "4100000035",
+      ifsc: "AXIS",
+      upiId: "6900000054",
+      storeManager: "Owner",
+      categories: "Groceries",
+      services: "Home Delivery",
+      liscenseNo: "1502000698",
+      licenseType: "Fissai",
+      openingTime: "9:00am",
+      closingTime: "8:00pm",
     },
     validationSchema: Yup.object({
       email: Yup.string().email("Must be a valid email").max(255).required("Email is required"),
       fullName: Yup.string().max(255).required("First name is required"),
       storeName: Yup.string().max(255).required("Last name is required"),
       password: Yup.string().max(255).required("Password is required"),
-      phoneNumber: Yup.string().max(255).required("Phone Number is required"),
+      phoneNo: Yup.string().max(255).required("Phone Number is required"),
       streetName: Yup.string().max(255).required("Street is required"),
       city: Yup.string().max(255).required("City is required"),
       countryCode: Yup.string().max(255).required("Country is required"),
@@ -64,23 +86,25 @@ const Register = () => {
       storeManager: Yup.string().max(255).required("storeManager is required"),
       categories: Yup.string().max(255).required("categories is required"),
       services: Yup.string().max(255).required("services is required"),
-      licenseNo: Yup.string().max(255).required("licenseNo is required"),
+      liscenseNo: Yup.string().max(255).required("liscenseNo is required"),
       licenseType: Yup.string().max(255).required("licenseType is required"),
       openingTime: Yup.string().max(255).required("openingTime is required"),
       closingTime: Yup.string().max(255).required("closingTime is required"),
       zipcode: Yup.string().max(255).required("Zip is required"),
-      cheque: Yup.mixed().required("Checque is required"),
+      cancelledCheque: Yup.mixed().required("Checque is required"),
       policy: Yup.boolean().oneOf([true], "This field must be checked"),
     }),
     onSubmit: () => {
-      router.push("/");
+      console.log(formik.values);
+      dispatch(register(formik.values));
+      // router.push("/login");
     },
   });
 
-  const handleCheque = (e) => {
-    formik.setFieldValue("cheque", e.target.files[0]);
-    console.log("formik.values.cheque");
-  };
+  // const handleCheque = (e) => {
+  //   formik.setFieldValue("cancelledCheque", e.target.files[0]);
+  //   console.log(formik.values.cancelledCheque);
+  // };
   return (
     <>
       <Head>
@@ -96,6 +120,7 @@ const Register = () => {
         }}
       >
         <Container maxWidth="lg">
+          {error && <p>{error}</p>}
           <form onSubmit={formik.handleSubmit}>
             <Box sx={{ my: 3 }}>
               <Typography color="textPrimary" variant="h4">
@@ -110,7 +135,7 @@ const Register = () => {
                 <TextField
                   error={Boolean(formik.touched.fullName && formik.errors.fullName)}
                   fullWidth
-                  helperText={formik.touched.fullName && formik.errors.fullName}
+                  helpertext={formik.touched.fullName && formik.errors.fullName}
                   label="Full Name"
                   margin="normal"
                   name="fullName"
@@ -124,7 +149,7 @@ const Register = () => {
                 <TextField
                   error={Boolean(formik.touched.storeName && formik.errors.storeName)}
                   fullWidth
-                  helperText={formik.touched.storeName && formik.errors.storeName}
+                  helpertext={formik.touched.storeName && formik.errors.storeName}
                   label="Store Name"
                   margin="normal"
                   name="storeName"
@@ -136,16 +161,16 @@ const Register = () => {
               </Grid>
               <Grid item xs={4}>
                 <TextField
-                  error={Boolean(formik.touched.phoneNumber && formik.errors.phoneNumber)}
+                  error={Boolean(formik.touched.phoneNo && formik.errors.phoneNo)}
                   fullWidth
-                  helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
+                  helpertext={formik.touched.phoneNo && formik.errors.phoneNo}
                   label="Phone Number"
                   margin="normal"
-                  name="phoneNumber"
+                  name="phoneNo"
                   type="number"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.phoneNumber}
+                  value={formik.values.phoneNo}
                   variant="outlined"
                 />
               </Grid>
@@ -153,7 +178,7 @@ const Register = () => {
                 <TextField
                   error={Boolean(formik.touched.email && formik.errors.email)}
                   fullWidth
-                  helperText={formik.touched.email && formik.errors.email}
+                  helpertext={formik.touched.email && formik.errors.email}
                   label="Email Address"
                   margin="normal"
                   name="email"
@@ -168,7 +193,7 @@ const Register = () => {
                 <TextField
                   error={Boolean(formik.touched.password && formik.errors.password)}
                   fullWidth
-                  helperText={formik.touched.password && formik.errors.password}
+                  helpertext={formik.touched.password && formik.errors.password}
                   label="Password"
                   margin="normal"
                   name="password"
@@ -190,7 +215,7 @@ const Register = () => {
                 <TextField
                   error={Boolean(formik.touched.streetName && formik.errors.streetName)}
                   fullWidth
-                  helperText={formik.touched.streetName && formik.errors.streetName}
+                  helpertext={formik.touched.streetName && formik.errors.streetName}
                   label="StreetName"
                   margin="normal"
                   name="streetName"
@@ -204,7 +229,7 @@ const Register = () => {
                 <TextField
                   error={Boolean(formik.touched.city && formik.errors.city)}
                   fullWidth
-                  helperText={formik.touched.city && formik.errors.city}
+                  helpertext={formik.touched.city && formik.errors.city}
                   label="City"
                   margin="normal"
                   name="city"
@@ -218,7 +243,7 @@ const Register = () => {
                 <TextField
                   error={Boolean(formik.touched.countryCode && formik.errors.countryCode)}
                   fullWidth
-                  helperText={formik.touched.countryCode && formik.errors.countryCode}
+                  helpertext={formik.touched.countryCode && formik.errors.countryCode}
                   label="Country"
                   margin="normal"
                   name="countryCode"
@@ -233,7 +258,7 @@ const Register = () => {
                 <TextField
                   error={Boolean(formik.touched.zipcode && formik.errors.zipcode)}
                   fullWidth
-                  helperText={formik.touched.zipcode && formik.errors.zipcode}
+                  helpertext={formik.touched.zipcode && formik.errors.zipcode}
                   label="Zip Code"
                   margin="normal"
                   name="zipcode"
@@ -248,7 +273,7 @@ const Register = () => {
                 <TextField
                   error={Boolean(formik.touched.stateCode && formik.errors.stateCode)}
                   fullWidth
-                  helperText={formik.touched.stateCode && formik.errors.stateCode}
+                  helpertext={formik.touched.stateCode && formik.errors.stateCode}
                   label="State"
                   margin="normal"
                   name="stateCode"
@@ -267,30 +292,32 @@ const Register = () => {
             </Box>
             <Grid container spacing={2}>
               <Grid item xs={4}>
-                <label htmlFor="cheque">
+                <label htmlFor="cancelledCheque">
                   <Button
                     variant="contained"
                     component="span"
                     color="primary"
-                    error={Boolean(formik.touched.cheque && formik.errors.cheque)}
-                    helperText={formik.touched.cheque && formik.errors.cheque}
+                    error={Boolean(formik.touched.cancelledCheque && formik.errors.cancelledCheque)}
+                    helpertext={formik.touched.cancelledCheque && formik.errors.cancelledCheque}
                     onChange={formik.handleChange}
                     fullWidth
                   >
-                    Upload Cheque
+                    Upload Cancelled Cheque
                   </Button>
                   <input
                     accept="image/*"
-                    id="cheque"
+                    id="cancelledCheque"
                     type="file"
                     style={{ display: "none" }}
                     onChange={(e) => {
-                      formik.setFieldValue("cheque", e.target.files[0]);
+                      formik.setFieldValue("cancelledCheque", e.target.files[0]);
                       console.log(e.target.files[0].name);
                     }}
                   />
                   <Typography variant="body2">
-                    {formik.values.cheque ? formik.values.cheque.name : "No file chosen"}
+                    {formik.values.cancelledCheque
+                      ? formik.values.cancelledCheque.name
+                      : "No file chosen"}
                   </Typography>
                 </label>
               </Grid>
@@ -301,7 +328,7 @@ const Register = () => {
                     component="span"
                     color="primary"
                     error={Boolean(formik.touched.uploadMenu && formik.errors.uploadMenu)}
-                    helperText={formik.touched.uploadMenu && formik.errors.uploadMenu}
+                    helpertext={formik.touched.uploadMenu && formik.errors.uploadMenu}
                     onChange={formik.handleChange}
                     fullWidth
                   >
@@ -329,7 +356,7 @@ const Register = () => {
                     component="span"
                     color="primary"
                     error={Boolean(formik.touched.uploadPan && formik.errors.uploadPan)}
-                    helperText={formik.touched.uploadPan && formik.errors.uploadPan}
+                    helpertext={formik.touched.uploadPan && formik.errors.uploadPan}
                     onChange={formik.handleChange}
                     fullWidth
                   >
@@ -357,7 +384,7 @@ const Register = () => {
                     component="span"
                     color="primary"
                     error={Boolean(formik.touched.licenseImage && formik.errors.licenseImage)}
-                    helperText={formik.touched.licenseImage && formik.errors.licenseImage}
+                    helpertext={formik.touched.licenseImage && formik.errors.licenseImage}
                     onChange={formik.handleChange}
                     fullWidth
                   >
@@ -387,7 +414,7 @@ const Register = () => {
                     component="span"
                     color="primary"
                     error={Boolean(formik.touched.gst && formik.errors.gst)}
-                    helperText={formik.touched.gst && formik.errors.gst}
+                    helpertext={formik.touched.gst && formik.errors.gst}
                     onChange={formik.handleChange}
                     fullWidth
                   >
@@ -415,7 +442,7 @@ const Register = () => {
                     component="span"
                     color="primary"
                     error={Boolean(formik.touched.storeImage && formik.errors.storeImage)}
-                    helperText={formik.touched.storeImage && formik.errors.storeImage}
+                    helpertext={formik.touched.storeImage && formik.errors.storeImage}
                     onChange={formik.handleChange}
                     fullWidth
                   >
@@ -447,7 +474,7 @@ const Register = () => {
                 <TextField
                   error={Boolean(formik.touched.bankName && formik.errors.bankName)}
                   fullWidth
-                  helperText={formik.touched.bankName && formik.errors.bankName}
+                  helpertext={formik.touched.bankName && formik.errors.bankName}
                   label="Bank Name"
                   margin="normal"
                   name="bankName"
@@ -461,7 +488,7 @@ const Register = () => {
                 <TextField
                   error={Boolean(formik.touched.accountHolder && formik.errors.accountHolder)}
                   fullWidth
-                  helperText={formik.touched.accountHolder && formik.errors.accountHolder}
+                  helpertext={formik.touched.accountHolder && formik.errors.accountHolder}
                   label="Account Holder Name"
                   margin="normal"
                   name="accountHolder"
@@ -475,7 +502,7 @@ const Register = () => {
                 <TextField
                   error={Boolean(formik.touched.accountNo && formik.errors.accountNo)}
                   fullWidth
-                  helperText={formik.touched.accountNo && formik.errors.accountNo}
+                  helpertext={formik.touched.accountNo && formik.errors.accountNo}
                   label="Country"
                   margin="normal"
                   name="Account No"
@@ -490,13 +517,13 @@ const Register = () => {
                 <TextField
                   error={Boolean(formik.touched.ifsc && formik.errors.ifsc)}
                   fullWidth
-                  helperText={formik.touched.ifsc && formik.errors.ifsc}
+                  helpertext={formik.touched.ifsc && formik.errors.ifsc}
                   label="IFSC Code"
                   margin="normal"
                   name="ifsc"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  type="number"
+                  type="string"
                   value={formik.values.ifsc}
                   variant="outlined"
                 />
@@ -505,7 +532,7 @@ const Register = () => {
                 <TextField
                   error={Boolean(formik.touched.upiId && formik.errors.upiId)}
                   fullWidth
-                  helperText={formik.touched.upiId && formik.errors.upiId}
+                  helpertext={formik.touched.upiId && formik.errors.upiId}
                   label="UPI ID"
                   margin="normal"
                   name="upiId"
@@ -527,7 +554,7 @@ const Register = () => {
                 <TextField
                   error={Boolean(formik.touched.storeManager && formik.errors.storeManager)}
                   fullWidth
-                  helperText={formik.touched.storeManager && formik.errors.storeManager}
+                  helpertext={formik.touched.storeManager && formik.errors.storeManager}
                   label="Store Manager"
                   margin="normal"
                   name="storeManager"
@@ -541,7 +568,7 @@ const Register = () => {
                 <TextField
                   error={Boolean(formik.touched.categories && formik.errors.categories)}
                   fullWidth
-                  helperText={formik.touched.categories && formik.errors.categories}
+                  helpertext={formik.touched.categories && formik.errors.categories}
                   label="Store Category"
                   margin="normal"
                   name="categories"
@@ -555,7 +582,7 @@ const Register = () => {
                 <TextField
                   error={Boolean(formik.touched.services && formik.errors.services)}
                   fullWidth
-                  helperText={formik.touched.services && formik.errors.services}
+                  helpertext={formik.touched.services && formik.errors.services}
                   label="Services"
                   margin="normal"
                   name="Account No"
@@ -568,16 +595,16 @@ const Register = () => {
               </Grid>
               <Grid item xs={4}>
                 <TextField
-                  error={Boolean(formik.touched.licenseNo && formik.errors.licenseNo)}
+                  error={Boolean(formik.touched.liscenseNo && formik.errors.liscenseNo)}
                   fullWidth
-                  helperText={formik.touched.licenseNo && formik.errors.licenseNo}
+                  helpertext={formik.touched.liscenseNo && formik.errors.liscenseNo}
                   label="license No"
                   margin="normal"
-                  name="licenseNo"
+                  name="liscenseNo"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   type="number"
-                  value={formik.values.licenseNo}
+                  value={formik.values.liscenseNo}
                   variant="outlined"
                 />
               </Grid>
@@ -585,14 +612,14 @@ const Register = () => {
                 <TextField
                   error={Boolean(formik.touched.licenseType && formik.errors.licenseType)}
                   fullWidth
-                  helperText={formik.touched.licenseType && formik.errors.licenseType}
+                  helpertext={formik.touched.licenseType && formik.errors.licenseType}
                   label="License Type"
                   margin="normal"
                   name="licenseType"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  type="licenseType"
-                  value={formik.values.password}
+                  type="string"
+                  value={formik.values.licenseType}
                   variant="outlined"
                 />
               </Grid>
@@ -600,14 +627,14 @@ const Register = () => {
                 <TextField
                   error={Boolean(formik.touched.openingTime && formik.errors.openingTime)}
                   fullWidth
-                  helperText={formik.touched.openingTime && formik.errors.openingTime}
+                  helpertext={formik.touched.openingTime && formik.errors.openingTime}
                   label="Opening Time"
                   margin="normal"
                   name="openingTime"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  type="openingTime"
-                  value={formik.values.password}
+                  type="string"
+                  value={formik.values.openingTime}
                   variant="outlined"
                 />
               </Grid>
@@ -615,14 +642,14 @@ const Register = () => {
                 <TextField
                   error={Boolean(formik.touched.closingTime && formik.errors.closingTime)}
                   fullWidth
-                  helperText={formik.touched.closingTime && formik.errors.closingTime}
+                  helpertext={formik.touched.closingTime && formik.errors.closingTime}
                   label="Closing Time"
                   margin="normal"
                   name="closingTime"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  type="closingTime"
-                  value={formik.values.password}
+                  type="string"
+                  value={formik.values.closingTime}
                   variant="outlined"
                 />
               </Grid>
