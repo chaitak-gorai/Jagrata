@@ -243,7 +243,6 @@ export const theme = createTheme({
       fontSize: "0.875rem",
       fontWeight: 400,
       lineHeight: 1.57,
-      color: "red",
     },
     subtitle1: {
       fontSize: "1rem",
