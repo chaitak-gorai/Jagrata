@@ -11,6 +11,11 @@ import {
   userRegisterReducer,
   userUpdateProfileReducer,
 } from "./reducers/userReducer";
+import {
+  createVendorCouponsReducer,
+  getAdminCouponsReducer,
+  getVendorCouponsReducer,
+} from "./reducers/couponReducer";
 
 //* config for the persistor
 const persistConfig = {
@@ -23,6 +28,9 @@ const reducer = combineReducers({
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
   userUpdateProfile: userUpdateProfileReducer,
+  adminCoupons: getAdminCouponsReducer,
+  vendorCoupons: getVendorCouponsReducer,
+  createVendorCoupons: createVendorCouponsReducer,
 });
 
 //*we are using the persisted reducer from the redux-persist library
