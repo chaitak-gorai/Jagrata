@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { AppBar, Avatar, Badge, Box, IconButton, Switch, Toolbar, Tooltip } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -14,8 +14,10 @@ import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import Divider from "@mui/material/Divider";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "src/store/actions/userActions";
+import axios from "axios";
+import { storeOnline } from "src/store/actions/featureActions";
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   boxShadow: theme.shadows[3],
@@ -26,7 +28,10 @@ export const DashboardNavbar = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
-
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+  const vendorOnline = useSelector((state) => state.online);
+  const { loading, error, online } = vendorOnline;
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -35,6 +40,37 @@ export const DashboardNavbar = (props) => {
   };
   const logOutHandler = () => {
     dispatch(logout());
+  };
+  const [checked, setChecked] = useState(true);
+  useEffect(() => {
+    if (userInfo) {
+      const getOnline = async () => {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        };
+        const { data } = await axios.get(
+          `https://gravitybites.in/api/vendors/getOnlineStatus/${userInfo._id}`,
+          config
+        );
+        setChecked(data.mess);
+      };
+      getOnline();
+    }
+  }, [userInfo]);
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+    dispatch(storeOnline(event.target.checked));
+  };
+
+  const handleOnline = (event) => {
+    if (online) {
+      dispatch({ type: "STORE_ONLINE_RESET" });
+    } else {
+      dispatch(storeOnline());
+    }
   };
   return (
     <>
@@ -113,7 +149,6 @@ export const DashboardNavbar = (props) => {
             id="account-menu"
             open={open}
             onClose={handleClose}
-            onClick={handleClose}
             PaperProps={{
               elevation: 0,
               sx: {
@@ -144,7 +179,12 @@ export const DashboardNavbar = (props) => {
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
             <MenuItem>
-              <Switch /> Store Online
+              <Switch
+                checked={online}
+                onChange={handleOnline}
+                inputProps={{ "aria-label": "controlled" }}
+              />{" "}
+              Store Online
             </MenuItem>
             <MenuItem>
               <Avatar /> My account
