@@ -74,7 +74,7 @@ export const ProductCard = ({ product, ...rest }) => (
         </Grid>
       </Grid>
     </Box>
-  </Card>
+    </Card>
 );
 
 ProductCard.propTypes = {
