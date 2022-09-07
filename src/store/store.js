@@ -16,6 +16,7 @@ import {
   getAdminCouponsReducer,
   getVendorCouponsReducer,
 } from "./reducers/couponReducer";
+import { productReducer } from "./reducers/productReducer";
 
 //* config for the persistor
 const persistConfig = {
@@ -31,6 +32,7 @@ const reducer = combineReducers({
   adminCoupons: getAdminCouponsReducer,
   vendorCoupons: getVendorCouponsReducer,
   createVendorCoupons: createVendorCouponsReducer,
+  products: productReducer,
 });
 
 //*we are using the persisted reducer from the redux-persist library
