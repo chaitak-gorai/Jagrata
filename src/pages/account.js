@@ -3,10 +3,15 @@ import { Box, Container, Grid, Typography } from "@mui/material";
 import { AccountProfile } from "../components/account/account-profile";
 import { AccountProfileDetails } from "../components/account/account-profile-details";
 import { Support } from "../components/account/support";
+import { Wallet } from "../components/account/wallet";
+import { Review } from "../components/account/review";
+import { Menu } from "../components/account/menu";
 import { DashboardLayout } from "../components/dashboard-layout";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import WalletIcon from '@mui/icons-material/Wallet';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 
 const Account = () => {
   const router = useRouter();
@@ -59,11 +64,93 @@ const Account = () => {
             Support
           </Typography>
           <Grid container spacing={3}>
+            
+            <Grid item lg={12} md={6} xs={12}>
+              <Support />
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
+
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          py: 8,
+        }}
+      >
+        <Container maxWidth="lg">
+          
+          <Typography sx={{ mb: 3 }} variant="h4">
+            Wallet Amount
+          </Typography>
+          <Grid container spacing={3}>
+            <Grid item lg={8} md={6} xs={12}>
+              <Wallet />
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
+
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          py: 8,
+        }}
+      >
+        <Container maxWidth="lg">
+          
+          <Typography sx={{ mb: 3 }} variant="h4">
+            Reviews
+          </Typography>
+          <Grid container spacing={3}>
+            <Grid item lg={12} md={6} xs={12}>
+              <Review />
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
+
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          py: 8,
+        }}
+      >
+        <Container maxWidth="lg">
+          
+          <Typography sx={{ mb: 3 }} variant="h4">
+            Terms
+          </Typography>
+          <Grid container spacing={3}>
             {/* <Grid item lg={4} md={6} xs={12}>
               <AccountProfile />
             </Grid> */}
-            <Grid item lg={8} md={6} xs={12}>
+            <Grid item lg={12} md={6} xs={12}>
               <Support />
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
+
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          py: 8,
+        }}
+      >
+        <Container maxWidth="lg">
+          
+          <Typography sx={{ mb: 3 }} variant="h4">
+            Menu
+          </Typography>
+          <Grid container spacing={3}>
+            
+            <Grid item lg={12} md={6} xs={12}>
+              <Menu />
             </Grid>
           </Grid>
         </Container>
