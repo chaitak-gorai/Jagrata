@@ -17,14 +17,14 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
+import Rating from "../account/rating";
 
 function createData(name, rating,comment,time ) {
   return { name, rating,comment,time };
 }
 
 const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+  createData('Frozen yoghurt', 3, 6.0, 24, 4.0),
 ];
 
 export const Review = (props) => {
@@ -49,7 +49,6 @@ export const Review = (props) => {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
             <TableCell align="center">Name</TableCell>
             <TableCell align="center">Rating</TableCell>
             <TableCell align="center">Comment</TableCell>
@@ -62,12 +61,9 @@ export const Review = (props) => {
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
               <TableCell align="center">{row.name}</TableCell>
+              <TableCell align="center"><Rating rating={row.rating}/></TableCell>
               <TableCell align="center">{row.comment}</TableCell>
-              <TableCell align="center">{row.rating}</TableCell>
               <TableCell align="center">{row.time}</TableCell>
             </TableRow>
           ))}

@@ -10,8 +10,8 @@ import { DashboardLayout } from "../components/dashboard-layout";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import WalletIcon from '@mui/icons-material/Wallet';
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
 const Account = () => {
   const router = useRouter();
@@ -43,6 +43,18 @@ const Account = () => {
           <Grid container spacing={3}>
             <Grid item lg={4} md={6} xs={12}>
               <AccountProfile />
+              <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <ToggleButtonGroup sx={{mt:3, mb:3}}
+                color="primary"
+                // value={couponType}
+                exclusive
+                // onChange={handleChange}
+                aria-label="Platform"
+              >
+                <ToggleButton value="admin">Online</ToggleButton>
+                <ToggleButton value="vendor">Offline</ToggleButton>
+              </ToggleButtonGroup>
+            </Box>
             </Grid>
             <Grid item lg={8} md={6} xs={12}>
               <AccountProfileDetails />
@@ -85,7 +97,7 @@ const Account = () => {
             Wallet Amount
           </Typography>
           <Grid container spacing={3}>
-            <Grid item lg={8} md={6} xs={12}>
+            <Grid item lg={12} md={6} xs={12}>
               <Wallet />
             </Grid>
           </Grid>
