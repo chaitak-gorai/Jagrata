@@ -18,6 +18,7 @@ import {
 } from "./reducers/couponReducer";
 import { productReducer } from "./reducers/productReducer";
 import { onlineReducer } from "./reducers/feturesReducer";
+import { orderListReducer } from "./reducers/ordersReducer";
 
 //* config for the persistor
 const persistConfig = {
@@ -35,6 +36,7 @@ const reducer = combineReducers({
   createVendorCoupons: createVendorCouponsReducer,
   products: productReducer,
   online: onlineReducer,
+  ordersList: orderListReducer,
 });
 
 //*we are using the persisted reducer from the redux-persist library
