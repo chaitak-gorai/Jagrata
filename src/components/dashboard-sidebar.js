@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
-import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import { Box, Button, Divider, Drawer, Typography, useMediaQuery } from "@mui/material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { ChartBar as ChartBarIcon } from "../icons/chart-bar";
@@ -16,6 +16,8 @@ import { Users as UsersIcon } from "../icons/users";
 import { XCircle as XCircleIcon } from "../icons/x-circle";
 import { Logo } from "./logo";
 import { NavItem } from "./nav-item";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 const items = [
   {
@@ -53,10 +55,26 @@ const items = [
 export const DashboardSidebar = (props) => {
   const { open, onClose } = props;
   const router = useRouter();
+  const [walletAmount, setWalletAmount] = useState(0);
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"), {
     defaultMatches: true,
     noSsr: false,
   });
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+  useEffect(() => {
+    const getWalletAmount = async () => {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.get(`https://gravitybites.in/api/orders/walletAmount`, config);
+      setWalletAmount(data.amount);
+    };
+    getWalletAmount();
+  }, []);
 
   useEffect(
     () => {
@@ -68,6 +86,7 @@ export const DashboardSidebar = (props) => {
         onClose?.();
       }
     },
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [router.asPath]
   );
@@ -109,10 +128,10 @@ export const DashboardSidebar = (props) => {
             >
               <div>
                 <Typography color="inherit" variant="subtitle1">
-                  Acme Inc
+                  Wallet Amount
                 </Typography>
                 <Typography color="neutral.400" variant="body2">
-                  Your tier : Premium
+                  {walletAmount}
                 </Typography>
               </div>
               <SelectorIcon
