@@ -33,6 +33,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useFormik } from "formik";
+import { LatestOrders } from "src/components/dashboard/latest-orders";
 
 const Order = () => {
   const router = useRouter();
@@ -41,6 +42,8 @@ const Order = () => {
   const { userInfo } = userLogin;
   const [Order, setOrder] = useState([]);
   const [msg, setMsg] = useState("");
+  const orderList = useSelector((state) => state.ordersList);
+  const { loading: orderLoading, error: orderError, orders } = orderList;
   const formik = useFormik({
     initialValues: {
       productName: "",
@@ -107,44 +110,19 @@ const Order = () => {
           }}
         >
           <Container maxWidth="lg">
-            <Typography sx={{ mb: 3 }} variant="h4">
+            <Typography
+              sx={{ mb: 3 }}
+              variant="h4"
+              style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+            >
               Orders
             </Typography>
-            <Grid container spacing={3}>
-              <Grid item lg={12} md={6} xs={12}>
-                <Card>
-                  <CardContent>
-                    {msg != "" ? <Alert severity="success">{msg}</Alert> : ""}
-                    <TableContainer component={Paper}>
-                      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead>
-                          <TableRow>
-                            <TableCell align="center">Product Name</TableCell>
-                            <TableCell align="center">Order Id</TableCell>
-                            <TableCell align="center">Product Price</TableCell>
-                            <TableCell align="center">Product Amount</TableCell>
-                            <TableCell align="center">Total Amount</TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {Order.map((row) => (
-                            <TableRow
-                              key={row._id}
-                              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                            >
-                              <TableCell align="center">{row.productName}</TableCell>
-                              <TableCell align="center">{row.productPrice}</TableCell>
-                              <TableCell align="center"></TableCell>
-                              <TableCell align="center"></TableCell>
-                              <TableCell align="center"></TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
-                  </CardContent>
-                </Card>
-              </Grid>
+            <Grid
+              container
+              spacing={3}
+              style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+            >
+              <LatestOrders orders={orders} />
             </Grid>
           </Container>
         </Box>
