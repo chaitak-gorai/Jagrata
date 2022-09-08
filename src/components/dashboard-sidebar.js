@@ -46,6 +46,16 @@ const items = [
     title: "Account",
   },
   {
+    href: "/menu",
+    icon: <UserIcon fontSize="small" />,
+    title: "My Menu",
+  },
+  {
+    href: "/reviews",
+    icon: <UserIcon fontSize="small" />,
+    title: "Reviews",
+  },
+  {
     href: "/settings",
     icon: <CogIcon fontSize="small" />,
     title: "Settings",

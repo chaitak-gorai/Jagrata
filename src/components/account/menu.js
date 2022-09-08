@@ -1,5 +1,14 @@
 import { useState } from "react";
-import {  Box,  Button,  Card,  CardContent,  CardHeader,  Divider,  Grid,  TextField,} from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
+  Grid,
+  TextField,
+} from "@mui/material";
 import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -29,42 +38,5 @@ export const Menu = (props) => {
     });
   };
 
-  return (
-    <Card>
-      <CardContent>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center">Product Name</TableCell>
-                <TableCell align="center">Product Price</TableCell>
-                <TableCell align="center"></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row) => (
-                <TableRow key={row.name} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-                  <TableCell align="center">{row.pname}</TableCell>
-                  <TableCell align="center">{row.price}</TableCell>
-                  <TableCell align="center"><DeleteIcon/></TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </CardContent>
-      <Divider />
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "flex-end",
-          p: 2,
-        }}
-      >
-        <Button color="primary" variant="contained">
-          Add Product
-        </Button>
-      </Box>
-    </Card>
-  );
+  return <h1>test</h1>;
 };
