@@ -36,6 +36,7 @@ const Account = () => {
   const [about, setAbout] = useState("");
   const [walletAmount, setWalletAmount] = useState(0);
   const [msg, setMsg] = useState("");
+  const [msg2, setMsg2] = useState("");
   const formik = useFormik({
     initialValues: {
       message: "",
@@ -61,6 +62,30 @@ const Account = () => {
         config
       );
       setMsg(data.mess);
+    },
+  });
+  const formik2 = useFormik({
+    initialValues: {
+      packagingCharge: null,
+    },
+    validationSchema: Yup.object({
+      packagingCharge: Yup.number().max(255).required("Message is required"),
+    }),
+    onSubmit: async () => {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.post(
+        `https://gravitybites.in/api/stores/packagingCharge`,
+        {
+          packagingCharge: formik2.values.packagingCharge,
+        },
+        config
+      );
+      setMsg2(data.mess);
     },
   });
   useEffect(() => {
@@ -131,7 +156,76 @@ const Account = () => {
           </Grid>
         </Container>
       </Box>
-
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          py: 8,
+        }}
+      >
+        <Container maxWidth="lg">
+          <Typography sx={{ mb: 3 }} variant="h4">
+            Update Packaging Charge
+          </Typography>
+          {msg2 != "" ? <Alert severity="success">{msg2}</Alert> : ""}
+          <Grid container spacing={3}>
+            <Grid item lg={12} md={6} xs={12}>
+              <Box
+                component="main"
+                sx={{
+                  alignItems: "center",
+                  display: "flex",
+                  flexGrow: 1,
+                  minHeight: "100%",
+                }}
+              >
+                <Container maxWidth="lg">
+                  <form onSubmit={formik2.handleSubmit}>
+                    <Card>
+                      <Divider />
+                      <CardContent>
+                        <Grid container spacing={3}>
+                          <Grid item md={6} xs={12}>
+                            <TextField
+                              error={Boolean(
+                                formik2.touched.packagingCharge && formik2.errors.packagingCharge
+                              )}
+                              fullWidth
+                              helpertext={
+                                formik2.touched.packagingCharge && formik2.errors.packagingCharge
+                              }
+                              label="packagingCharge"
+                              margin="normal"
+                              name="packagingCharge"
+                              onBlur={formik2.handleBlur}
+                              onChange={formik2.handleChange}
+                              value={formik2.values.packagingCharge}
+                              variant="outlined"
+                            />
+                          </Grid>
+                        </Grid>
+                      </CardContent>
+                      <Divider />
+                      <Box sx={{ py: 2 }}>
+                        <Button
+                          color="primary"
+                          disabled={formik2.isSubmitting}
+                          fullWidth
+                          size="large"
+                          type="submit"
+                          variant="contained"
+                        >
+                          Update
+                        </Button>
+                      </Box>
+                    </Card>
+                  </form>
+                </Container>
+              </Box>
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
       <Box
         component="main"
         sx={{
