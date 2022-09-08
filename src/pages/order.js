@@ -34,12 +34,12 @@ import {
 import axios from "axios";
 import { useFormik } from "formik";
 
-const Menu = () => {
+const Order = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-  const [menu, setMenu] = useState([]);
+  const [Order, setOrder] = useState([]);
   const [msg, setMsg] = useState("");
   const formik = useFormik({
     initialValues: {
@@ -58,31 +58,31 @@ const Menu = () => {
         },
       };
       const { data } = await axios.post(
-        `https://gravitybites.in/api/stores/addtoMenu`,
+        `https://gravitybites.in/api/stores/addtoOrder`,
         {
           productName: formik.values.productName,
           productPrice: formik.values.productPrice,
         },
         config
       );
-      setMsg(`${data.mess} Added to Menu`);
+      setMsg(`${data.mess} Added to Order`);
     },
   });
   useEffect(() => {
     if (!userInfo) {
       router.push("/login");
     }
-    const getMenu = async () => {
+    const getOrder = async () => {
       const config = {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
-      const { data } = await axios.get(`https://gravitybites.in/api/stores/showMenu`, config);
-      setMenu(data.mymenu);
+      const { data } = await axios.get(`https://gravitybites.in/api/stores/showOrder`, config);
+      setOrder(data.myOrder);
     };
-    getMenu();
+    getOrder();
   }, [userInfo, dispatch, router, msg]);
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
@@ -90,7 +90,7 @@ const Menu = () => {
   return (
     <>
       <Head>
-        <title>Menu | Material Kit</title>
+        <title>Order | Material Kit</title>
       </Head>
       <Box
         component="main"
@@ -108,7 +108,7 @@ const Menu = () => {
         >
           <Container maxWidth="lg">
             <Typography sx={{ mb: 3 }} variant="h4">
-              Menu
+              Orders
             </Typography>
             <Grid container spacing={3}>
               <Grid item lg={12} md={6} xs={12}>
@@ -120,114 +120,29 @@ const Menu = () => {
                         <TableHead>
                           <TableRow>
                             <TableCell align="center">Product Name</TableCell>
+                            <TableCell align="center">Order Id</TableCell>
                             <TableCell align="center">Product Price</TableCell>
-                            <TableCell align="center"></TableCell>
+                            <TableCell align="center">Product Amount</TableCell>
+                            <TableCell align="center">Total Amount</TableCell>
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {menu.map((row) => (
+                          {Order.map((row) => (
                             <TableRow
                               key={row._id}
                               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                             >
                               <TableCell align="center">{row.productName}</TableCell>
                               <TableCell align="center">{row.productPrice}</TableCell>
-                              <TableCell align="center">
-                                <DeleteIcon
-                                  onClick={async () => {
-                                    const config = {
-                                      headers: {
-                                        "Content-Type": "application/json",
-                                        Authorization: `Bearer ${userInfo.token}`,
-                                      },
-                                    };
-                                    await axios.post(
-                                      `https://gravitybites.in/api/stores/removefromMenu`,
-                                      { productName: row.productName },
-                                      config
-                                    );
-                                    setMsg(`${row.productName} Deleted`);
-                                  }}
-                                />
-                              </TableCell>
+                              <TableCell align="center"></TableCell>
+                              <TableCell align="center"></TableCell>
+                              <TableCell align="center"></TableCell>
                             </TableRow>
                           ))}
                         </TableBody>
                       </Table>
                     </TableContainer>
                   </CardContent>
-                  <Divider />
-                  <Box
-                    component="main"
-                    sx={{
-                      alignItems: "center",
-                      display: "flex",
-                      flexGrow: 1,
-                      minHeight: "100%",
-                    }}
-                  >
-                    <Container maxWidth="lg">
-                      <form onSubmit={formik.handleSubmit}>
-                        <Card>
-                          <Divider />
-                          <CardContent>
-                            <Grid container spacing={3}>
-                              <Grid item md={6} xs={12}>
-                                <TextField
-                                  error={Boolean(
-                                    formik.touched.productName && formik.errors.productName
-                                  )}
-                                  fullWidth
-                                  helpertext={
-                                    formik.touched.productName && formik.errors.productName
-                                  }
-                                  label="Product Name"
-                                  margin="normal"
-                                  name="productName"
-                                  onBlur={formik.handleBlur}
-                                  onChange={formik.handleChange}
-                                  value={formik.values.productName}
-                                  variant="outlined"
-                                />
-                              </Grid>
-
-                              <Grid item md={6} xs={12}>
-                                <TextField
-                                  error={Boolean(
-                                    formik.touched.productPrice && formik.errors.productPrice
-                                  )}
-                                  fullWidth
-                                  helpertext={
-                                    formik.touched.productPrice && formik.errors.productPrice
-                                  }
-                                  label="Product Price"
-                                  margin="normal"
-                                  name="productPrice"
-                                  onBlur={formik.handleBlur}
-                                  onChange={formik.handleChange}
-                                  value={formik.values.productPrice}
-                                  variant="outlined"
-                                />
-                              </Grid>
-                            </Grid>
-                          </CardContent>
-                          <Divider />
-                          <Box sx={{ py: 2 }}>
-                            <Button
-                              color="primary"
-                              disabled={formik.isSubmitting}
-                              fullWidth
-                              size="large"
-                              type="submit"
-                              variant="contained"
-                            >
-                              Add Menu
-                            </Button>
-                          </Box>
-                        </Card>
-                      </form>
-                    </Container>
-                  </Box>
                 </Card>
               </Grid>
             </Grid>
@@ -238,6 +153,6 @@ const Menu = () => {
   );
 };
 
-Menu.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+Order.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-export default Menu;
+export default Order;
