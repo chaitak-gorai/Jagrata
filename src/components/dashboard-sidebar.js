@@ -51,6 +51,11 @@ const items = [
     title: "My Menu",
   },
   {
+    href: "/order",
+    icon: <UserIcon fontSize="small" />,
+    title: "My Orders",
+  },
+  {
     href: "/reviews",
     icon: <UserIcon fontSize="small" />,
     title: "Reviews",
