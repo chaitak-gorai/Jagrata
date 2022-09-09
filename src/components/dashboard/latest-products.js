@@ -59,7 +59,7 @@ export const LatestProducts = (props) => (
           <ListItemAvatar>
             <img
               alt={product.name}
-              src={`http://gravitybites.in${product.image}`}
+              src={`https://gravitybites.in${product.image}`}
               style={{
                 height: 48,
                 width: 48,
