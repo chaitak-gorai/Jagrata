@@ -34,30 +34,24 @@ import {
 import axios from "axios";
 import { useFormik } from "formik";
 import { LatestOrders } from "src/components/dashboard/latest-orders";
+import { listMyOrder } from "src/store/actions/ordersActions";
+import { SeverityPill } from "src/components/severity-pill";
 
 const Order = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-  const [order, setOrder] = useState([]);
+
   const [msg, setMsg] = useState("");
+  const orderList = useSelector((state) => state.ordersList);
+  const { loading: orderLoading, error: orderError, orders } = orderList;
   useEffect(() => {
     if (!userInfo) {
       router.push("/login");
     }
-    const getOrder = async () => {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      };
-      const { data } = await axios.get(`https://gravitybites.in/api/orders/getallorders`, config);
-      setOrder(data.orders);
-      console.log(order);
-    };
-    getOrder();
+    dispatch(listMyOrder());
+    console.log(orders);
   }, [userInfo, dispatch, router, msg]);
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
@@ -91,54 +85,104 @@ const Order = () => {
             </Typography>
             <Grid container spacing={3}>
               <Grid item lg={12} md={6} xs={12}>
-                <Card>
-                  {order?.map((ord) => {
-                    <CardContent>
-                    {msg != "" ? <Alert severity="success">{msg}</Alert> : ""}
-                    <Typography sx={{ pb: 2 }}>Order Id:- {ord._id}</Typography>
-                    <Typography sx={{ pb: 2 }}>Delivery Slot:- </Typography>
-                    <Typography sx={{ pb: 2 }}>Pickup Address:- 4654556656</Typography>
-
-                    <TableContainer component={Paper}>
-                      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead>
-                          <TableRow>
-                            <TableCell align="center">Product Name</TableCell>
-                            <TableCell align="center">Product Image</TableCell>
-                            <TableCell align="center">Product Quantity</TableCell>
-                            <TableCell align="center">Product Price</TableCell>
-                            <TableCell align="center">Product GST</TableCell>
-                            <TableCell align="center">Total Amount</TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {ord?.products.map((row) => (
-                            <TableRow
-                              key={row._id}
-                              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                {orders?.map((ord) => {
+                  return (
+                    <Card key={ord._id} style={{ margin: "20px" }}>
+                      <CardContent>
+                        {msg != "" ? <Alert severity="success">{msg}</Alert> : ""}
+                        <Grid
+                          item
+                          lg={12}
+                          md={6}
+                          xs={12}
+                          style={{ display: "flex", justifyContent: "space-between" }}
+                        >
+                          <Typography sx={{ pb: 2 }}>
+                            User:- {ord.userId.name} ID:{ord.userId._id}{" "}
+                          </Typography>
+                          <Typography sx={{ pb: 2 }}>
+                            Location:- {ord.location.formattedAddress}
+                          </Typography>
+                          <Typography sx={{ pb: 2 }}>
+                            Location:- {ord.location.formattedAddress}
+                          </Typography>
+                          <Typography sx={{ pb: 2 }}>
+                            Status
+                            <SeverityPill
+                              color={
+                                (ord.status === "delivered" && "success") ||
+                                (ord.status === "refunded" && "error") ||
+                                "warning"
+                              }
                             >
-                              <TableCell align="center">{row.productId.name}</TableCell>
-                              <TableCell align="center">
-                                {" "}
-                                <img
-                                  alt="Product"
-                                  src={`https://gravitybites.in${row.productId.image}`}
-                                  width="100px"
-                                  height="100px"
-                                />
-                              </TableCell>
-                              <TableCell align="center"></TableCell>
-                              <TableCell align="center"></TableCell>
-                              <TableCell align="center"></TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
-                  </CardContent>
-                  })}
-                  
-                </Card>
+                              {ord.status}
+                            </SeverityPill>
+                          </Typography>
+                        </Grid>
+                        <TableContainer component={Paper}>
+                          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableHead>
+                              <TableRow>
+                                <TableCell align="center">Product Id</TableCell>
+                                <TableCell align="center">Product Image</TableCell>
+                                <TableCell align="center">Product Name</TableCell>
+
+                                <TableCell align="center">Product Quantity</TableCell>
+                                <TableCell align="center">Product Price</TableCell>
+                                <TableCell align="center">Product GST</TableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              {ord?.products.map((row) => (
+                                <TableRow
+                                  key={row._id}
+                                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                                >
+                                  <TableCell align="center">{row.productId._id}</TableCell>
+                                  <TableCell align="center">
+                                    {" "}
+                                    <img
+                                      alt="Product"
+                                      src={`https://gravitybites.in${row.productId.image}`}
+                                      width="100px"
+                                      height="100px"
+                                    />
+                                  </TableCell>
+                                  <TableCell align="center">{row.productId.name}</TableCell>
+                                  <TableCell align="center">{row.quantity}</TableCell>
+                                  <TableCell align="center">{row.price}</TableCell>
+                                  <TableCell align="center">{row.gst}</TableCell>
+                                </TableRow>
+                              ))}
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
+                        <Grid
+                          item
+                          lg={12}
+                          md={6}
+                          xs={12}
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            marginTop: "10px",
+                          }}
+                        >
+                          <Typography sx={{ pb: 2 }}>Sub Total:- {ord.subTotal} </Typography>
+                          <Typography sx={{ pb: 2 }}>GST:- {ord.GST} </Typography>
+                          <Typography sx={{ pb: 2 }}>
+                            Packaging:- {ord.packagingCharges}{" "}
+                          </Typography>
+                          <Typography sx={{ pb: 2 }}>Base:- {ord.baseFare} </Typography>
+                          <Typography sx={{ pb: 2 }}>Distance fee:- {ord.distanceFee} </Typography>
+                          <Typography sx={{ pb: 2 }}>
+                            Total:-<SeverityPill color="success">{ord.Total}</SeverityPill>{" "}
+                          </Typography>
+                        </Grid>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
               </Grid>
             </Grid>
           </Container>
