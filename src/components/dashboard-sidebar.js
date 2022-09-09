@@ -34,11 +34,7 @@ const items = [
     icon: <ShoppingBagIcon fontSize="small" />,
     title: "Products",
   },
-  {
-    href: "/customers",
-    icon: <ShoppingBagIcon fontSize="small" />,
-    title: "Products",
-  },
+
   {
     href: "/coupons",
     icon: <LocalOfferIcon fontSize="small" />,

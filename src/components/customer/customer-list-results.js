@@ -30,7 +30,7 @@ import ArchiveIcon from "@mui/icons-material/Archive";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-const StyledMenu = styled((props) => (
+export const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
     anchorOrigin={{
