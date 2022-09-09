@@ -39,35 +39,9 @@ const Order = () => {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-  const [Order, setOrder] = useState([]);
+  const [order, setOrder] = useState([]);
   const [msg, setMsg] = useState("");
-  const formik = useFormik({
-    initialValues: {
-      productName: "",
-      productPrice: "",
-    },
-    validationSchema: Yup.object({
-      productName: Yup.string().max(255).required("Name is required"),
-      productPrice: Yup.string().required("Price is required"),
-    }),
-    onSubmit: async () => {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      };
-      const { data } = await axios.post(
-        `https://gravitybites.in/api/stores/addtoOrder`,
-        {
-          productName: formik.values.productName,
-          productPrice: formik.values.productPrice,
-        },
-        config
-      );
-      setMsg(`${data.mess} Added to Order`);
-    },
-  });
+
   useEffect(() => {
     if (!userInfo) {
       router.push("/login");
@@ -79,8 +53,9 @@ const Order = () => {
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
-      const { data } = await axios.get(`https://gravitybites.in/api/stores/showOrder`, config);
-      setOrder(data.myOrder);
+      const { data } = await axios.get(`https://gravitybites.in/api/orders/getallorders`, config);
+      setOrder(data.orders);
+      console.log(order);
     };
     getOrder();
   }, [userInfo, dispatch, router, msg]);
@@ -113,27 +88,41 @@ const Order = () => {
             <Grid container spacing={3}>
               <Grid item lg={12} md={6} xs={12}>
                 <Card>
-                  <CardContent>
+                  {order?.map((ord) => {
+                    <CardContent>
                     {msg != "" ? <Alert severity="success">{msg}</Alert> : ""}
+                    <Typography sx={{ pb: 2 }}>Order Id:- {ord._id}</Typography>
+                    <Typography sx={{ pb: 2 }}>Delivery Slot:- </Typography>
+                    <Typography sx={{ pb: 2 }}>Pickup Address:- 4654556656</Typography>
+
                     <TableContainer component={Paper}>
                       <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
                           <TableRow>
                             <TableCell align="center">Product Name</TableCell>
-                            <TableCell align="center">Order Id</TableCell>
+                            <TableCell align="center">Product Image</TableCell>
+                            <TableCell align="center">Product Quantity</TableCell>
                             <TableCell align="center">Product Price</TableCell>
-                            <TableCell align="center">Product Amount</TableCell>
+                            <TableCell align="center">Product GST</TableCell>
                             <TableCell align="center">Total Amount</TableCell>
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {Order.map((row) => (
+                          {ord?.products.map((row) => (
                             <TableRow
                               key={row._id}
                               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                             >
-                              <TableCell align="center">{row.productName}</TableCell>
-                              <TableCell align="center">{row.productPrice}</TableCell>
+                              <TableCell align="center">{row.productId.name}</TableCell>
+                              <TableCell align="center">
+                                {" "}
+                                <img
+                                  alt="Product"
+                                  src={`https://gravitybites.in${row.productId.image}`}
+                                  width="100px"
+                                  height="100px"
+                                />
+                              </TableCell>
                               <TableCell align="center"></TableCell>
                               <TableCell align="center"></TableCell>
                               <TableCell align="center"></TableCell>
@@ -143,6 +132,8 @@ const Order = () => {
                       </Table>
                     </TableContainer>
                   </CardContent>
+                  })}
+                  
                 </Card>
               </Grid>
             </Grid>
