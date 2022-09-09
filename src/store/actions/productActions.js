@@ -30,6 +30,65 @@ export const getProducts = (cat) => async (dispatch, getState) => {
     }
   }
 };
+export const createProduct = (formData) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: "CREATE_PRODUCT_REQUEST" });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.post(
+      `https://gravitybites.in/api/products/add-product`,
+      {
+        category: formData.category,
+        subcategory: formData.subcategory,
+        name: formData.name,
+        image: "/uploads/carrot.jpg",
+        variable: [
+          {
+            price: formData.price,
+            qty: formData.price,
+            discount: 0,
+            unit: "Kg",
+            inStock: true,
+            variableName: formData.variableName,
+          },
+          {
+            price: formData.price2,
+            qty: formData.price2,
+            discount: 0,
+            unit: "Kg",
+            inStock: true,
+            variableName: formData.variableName2,
+          },
+          {
+            price: formData.price3,
+            qty: formData.price3,
+            discount: 0,
+            unit: "Kg",
+            inStock: true,
+            variableName: formData.variableName3,
+          },
+        ],
+      },
+      config
+    );
+
+    dispatch({ type: "CREATE_PRODUCT_SUCCESS", payload: data.mess });
+  } catch (error) {
+    dispatch({
+      type: "CREATE_PRODUCT_FAIL",
+      payload:
+        error.response && error.response.data.message ? error.response.data.message : error.message,
+    });
+  }
+};
 
 // export const listProductDetails = (id) => async (dispatch) => {
 //   try {

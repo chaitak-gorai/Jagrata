@@ -11,7 +11,20 @@ export const productReducer = (state = { products: [] }, action) => {
       return state;
   }
 };
+export const createProductReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "CREATE_PRODUCT_REQUEST":
+      return { loading: true };
+    case "CREATE_PRODUCT_SUCCESS":
+      return { loading: false, message: action.payload };
 
+    case "CREATE_PRODUCT_FAIL":
+      return { loading: false, error: action.payload };
+
+    default:
+      return state;
+  }
+};
 // export const productDetailReducer = (state = { product: {} }, action) => {
 //   switch (action.type) {
 //     case "PRODUCT_DETAILS_REQUEST":

@@ -13,6 +13,7 @@ import * as React from "react";
 import { Download as DownloadIcon } from "../../icons/download";
 import { Search as SearchIcon } from "../../icons/search";
 import { Upload as UploadIcon } from "../../icons/upload";
+import CreateProduct from "../addProductInput";
 import ProductInput from "../addProductInput";
 export const ProductListToolbar = (props) => {
   const style = {
@@ -29,35 +30,42 @@ export const ProductListToolbar = (props) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  return(
-  <Box {...props}>
-    <Box
-      sx={{
-        alignItems: "center",
-        display: "flex",
-        justifyContent: "space-between",
-        flexWrap: "wrap",
-        m: -1,
-      }}
-    >
-      <Typography sx={{ m: 1 }} variant="h4">
-        Products
-      </Typography>
-      <Box sx={{ m: 1 }}>
-        <Button color="primary" variant="contained" onClick={handleOpen}>
-          Add products
-        </Button>
-        <Modal
+  return (
+    <Box {...props}>
+      <Box
+        sx={{
+          alignItems: "center",
+          display: "flex",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+          m: -1,
+        }}
+      >
+        <Typography sx={{ m: 1 }} variant="h4">
+          Products
+        </Typography>
+        <Box sx={{ m: 1 }}>
+          <Button color="primary" variant="contained" onClick={handleOpen}>
+            Add products
+          </Button>
+          <Modal
+            style={{
+              position: "absolute",
+              marginTop: "30px",
+              overflow: "scroll",
+              height: "100vh",
+            }}
             open={open}
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
             <Box sx={style}>
-              <ProductInput onclose={handleClose} />
+              <CreateProduct onclose={handleClose} />
             </Box>
           </Modal>
+        </Box>
       </Box>
     </Box>
-  </Box>)
+  );
 };
