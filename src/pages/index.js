@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getProducts } from "src/store/actions/productActions";
 import { listMyOrder } from "src/store/actions/ordersActions";
+import { margin } from "@mui/system";
 
 const Dashboard = () => {
   const router = useRouter();
@@ -21,8 +22,11 @@ const Dashboard = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const productList = useSelector((state) => state.products);
 
-  const { loading, error, products } = productList;
-
+  const { loading, error: productErr, products } = productList;
+  const adminCoupons = useSelector((state) => state.adminCoupons);
+  const { loading: adminLoad, error: adminErr, coupons } = adminCoupons;
+  const vendorCouponsList = useSelector((state) => state.vendorCoupons);
+  const { loading: vendorLoading, error: vendorError, vendorCoupons } = vendorCouponsList;
   const { userInfo } = userLogin;
   const orderList = useSelector((state) => state.ordersList);
   const { loading: orderLoading, error: orderError, orders } = orderList;
@@ -46,6 +50,23 @@ const Dashboard = () => {
         }}
       >
         <Container maxWidth={false}>
+          <Grid container spacing={4} sx={{ marginBottom: "4" }}>
+            <Grid item>
+              <Budget text={"orders"} value={orders ? Object.keys(orders).length : 0} />
+            </Grid>
+            <Grid item>
+              <Budget text={"products"} value={orders ? Object.keys(products).length : 0} />
+            </Grid>
+            <Grid item>
+              <Budget text={"Admin Coupons"} value={orders ? Object.keys(coupons).length : 0} />
+            </Grid>
+            <Grid item>
+              <Budget
+                text={"Vendor Coupons"}
+                value={orders ? Object.keys(vendorCoupons).length : 0}
+              />
+            </Grid>
+          </Grid>
           <Grid container spacing={3}>
             <Grid item lg={4} md={6} xl={3} xs={12}>
               <LatestProducts sx={{ height: "100%" }} products={products} />
