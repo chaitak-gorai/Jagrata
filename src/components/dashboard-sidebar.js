@@ -10,9 +10,9 @@ import { Cog as CogIcon } from "../icons/cog";
 import { Lock as LockIcon } from "../icons/lock";
 import { Selector as SelectorIcon } from "../icons/selector";
 import { ShoppingBag as ShoppingBagIcon } from "../icons/shopping-bag";
-import ReviewsIcon from '@mui/icons-material/Reviews';
-import MenuIcon from '@mui/icons-material/Menu';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ReviewsIcon from "@mui/icons-material/Reviews";
+import MenuIcon from "@mui/icons-material/Menu";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { User as UserIcon } from "../icons/user";
 import { UserAdd as UserAddIcon } from "../icons/user-add";
 import { Users as UsersIcon } from "../icons/users";
@@ -31,6 +31,11 @@ const items = [
 
   {
     href: "/products",
+    icon: <ShoppingBagIcon fontSize="small" />,
+    title: "Products",
+  },
+  {
+    href: "/customers",
     icon: <ShoppingBagIcon fontSize="small" />,
     title: "Products",
   },

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getProducts, getProductSubcategory } from "src/store/actions/productActions";
 import axios from "axios";
+import { CustomerListResults } from "src/components/customer/customer-list-results";
 
 const Products = () => {
   const router = useRouter();
@@ -78,7 +79,7 @@ const Products = () => {
               ))}
             </ToggleButtonGroup>
           </Box>
-          <Box sx={{ pt: 3 }}>
+          {/*<Box sx={{ pt: 3 }}>
             <Grid container spacing={3}>
               {products.map((product) => (
                 <Grid item key={product.id} lg={6} md={1} xs={12}>
@@ -86,7 +87,12 @@ const Products = () => {
                 </Grid>
               ))}
             </Grid>
-          </Box>
+              </Box> */}
+          <Container maxWidth={false}>
+            <Box sx={{ mt: 3 }}>
+              <CustomerListResults products={products} />
+            </Box>
+          </Container>
         </Container>
       </Box>
     </>

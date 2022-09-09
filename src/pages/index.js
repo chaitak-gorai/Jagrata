@@ -50,7 +50,11 @@ const Dashboard = () => {
         }}
       >
         <Container maxWidth={false}>
-          <Grid container spacing={4} sx={{ marginBottom: "4" }}>
+          <Grid
+            container
+            spacing={4}
+            sx={{ marginBottom: "20px", display: "flex", justifyContent: "center" }}
+          >
             <Grid item>
               <Budget text={"orders"} value={orders ? Object.keys(orders).length : 0} />
             </Grid>
