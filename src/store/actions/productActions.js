@@ -1,28 +1,33 @@
 import axios from "axios";
+import { id } from "date-fns/locale";
 export const getProducts = (cat) => async (dispatch, getState) => {
   const {
     userLogin: { userInfo },
   } = getState();
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${userInfo.token}`,
-    },
-  };
+  if (userInfo) {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
 
-  try {
-    dispatch({ type: "PRODUCT_LIST_REQUEST" });
-    const { data } = await axios.get(
-      `https://gravitybites.in/api/products/vendor/get-products/${cat}`,
-      config
-    );
-    dispatch({ type: "PRODUCT_LIST_SUCCESS", payload: data.products });
-  } catch (error) {
-    dispatch({
-      type: "PRODUCT_LIST_FAIL",
-      payload:
-        error.response && error.response.data.message ? error.response.data.message : error.message,
-    });
+    try {
+      dispatch({ type: "PRODUCT_LIST_REQUEST" });
+      const { data } = await axios.get(
+        `https://gravitybites.in/api/products/vendor/get-products/${cat}`,
+        config
+      );
+      dispatch({ type: "PRODUCT_LIST_SUCCESS", payload: data.products });
+    } catch (error) {
+      dispatch({
+        type: "PRODUCT_LIST_FAIL",
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
   }
 };
 

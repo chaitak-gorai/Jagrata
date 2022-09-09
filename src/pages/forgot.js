@@ -29,22 +29,23 @@ const Login = () => {
   const formik = useFormik({
     initialValues: {
       email: "",
-      password: "",
     },
     validationSchema: Yup.object({
       email: Yup.string().email("Must be a valid email").max(255).required("Email is required"),
-      password: Yup.string().max(255).required("Password is required"),
     }),
-    onSubmit: () => {
-      dispatch(login(formik.values.email, formik.values.password));
-      router.push("/");
+    onSubmit: async () => {
+      const { data } = await axios.post("https://gravitybites.in/api/stores/sendLink", {
+        email: formik.values.email,
+      });
+
+      router.push("/login");
     },
   });
 
   return (
     <>
       <Head>
-        <title>Login | Material Kit</title>
+        <title>Forgot</title>
       </Head>
       <Box
         component="main"
@@ -59,10 +60,11 @@ const Login = () => {
           <form onSubmit={formik.handleSubmit}>
             <Box sx={{ my: 3 }}>
               <Typography color="textPrimary" variant="h4">
-                Sign in
+                Reset Password
               </Typography>
               <Typography color="textSecondary" gutterBottom variant="body2">
-                Sign in on the internal platform
+                Enter your email address below and we will send you instructions on how to reset
+                your password.
               </Typography>
             </Box>
 
@@ -79,19 +81,7 @@ const Login = () => {
               value={formik.values.email}
               variant="outlined"
             />
-            <TextField
-              error={Boolean(formik.touched.password && formik.errors.password)}
-              fullWidth
-              helperText={formik.touched.password && formik.errors.password}
-              label="Password"
-              margin="normal"
-              name="password"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              type="password"
-              value={formik.values.password}
-              variant="outlined"
-            />
+
             <Box sx={{ py: 2 }}>
               <Button
                 color="primary"
@@ -101,36 +91,14 @@ const Login = () => {
                 type="submit"
                 variant="contained"
               >
-                Sign In Now
+                Send Now
               </Button>
             </Box>
             <Typography color="textSecondary" variant="body2">
-              Forgot Password?{" "}
-              <NextLink href="/forgot">
-                <Link
-                  to="/forgot"
-                  variant="subtitle2"
-                  underline="hover"
-                  sx={{
-                    cursor: "pointer",
-                  }}
-                >
-                  Reset
-                </Link>
-              </NextLink>
-            </Typography>
-            <Typography color="textSecondary" variant="body2">
-              Don&apos;t have an account?{" "}
-              <NextLink href="/register">
-                <Link
-                  to="/register"
-                  variant="subtitle2"
-                  underline="hover"
-                  sx={{
-                    cursor: "pointer",
-                  }}
-                >
-                  Sign Up
+              Have an account?{" "}
+              <NextLink href="/login" passHref>
+                <Link variant="subtitle2" underline="hover">
+                  Sign In
                 </Link>
               </NextLink>
             </Typography>

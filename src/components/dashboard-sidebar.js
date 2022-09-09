@@ -25,11 +25,7 @@ const items = [
     icon: <ChartBarIcon fontSize="small" />,
     title: "Dashboard",
   },
-  {
-    href: "/customers",
-    icon: <UsersIcon fontSize="small" />,
-    title: "Customers",
-  },
+
   {
     href: "/products",
     icon: <ShoppingBagIcon fontSize="small" />,
@@ -78,17 +74,19 @@ export const DashboardSidebar = (props) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   useEffect(() => {
-    const getWalletAmount = async () => {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userInfo.token}`,
-        },
+    if (userInfo) {
+      const getWalletAmount = async () => {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        };
+        const { data } = await axios.get(`https://gravitybites.in/api/orders/walletAmount`, config);
+        setWalletAmount(data.amount);
       };
-      const { data } = await axios.get(`https://gravitybites.in/api/orders/walletAmount`, config);
-      setWalletAmount(data.amount);
-    };
-    getWalletAmount();
+      getWalletAmount();
+    }
   }, []);
 
   useEffect(

@@ -45,12 +45,6 @@ export const CouponListToolbar = (props) => {
           Coupons
         </Typography>
         <Box sx={{ m: 1 }}>
-          <Button startIcon={<UploadIcon fontSize="small" />} sx={{ mr: 1 }}>
-            Import
-          </Button>
-          <Button startIcon={<DownloadIcon fontSize="small" />} sx={{ mr: 1 }}>
-            Export
-          </Button>
           <Button color="primary" variant="contained" onClick={handleOpen}>
             Add Coupons
           </Button>

@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Box, Container, Grid, Pagination } from "@mui/material";
+import { Alert, Box, Container, Grid, Pagination } from "@mui/material";
 
 import { CouponListToolbar } from "../components/coupon/coupon-list-toolbar";
 import { CouponCard } from "../components/coupon/coupon-card";
@@ -17,6 +17,7 @@ const Coupons = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const [couponType, setCouponType] = useState("admin");
+  const [msg, setMsg] = useState("");
 
   const handleChange = () => {
     if (couponType === "admin") {
@@ -35,7 +36,7 @@ const Coupons = () => {
     dispatch({ type: "VENDOR_COUPONS_RESET" });
     dispatch(getAdminCoupons());
     dispatch(getVendorCoupons());
-  }, [dispatch]);
+  }, [dispatch, msg]);
 
   useEffect(() => {
     if (!userInfo) {
@@ -61,6 +62,7 @@ const Coupons = () => {
           }}
         >
           <Container maxWidth={false}>
+            {msg != "" ? <Alert severity="success">{msg}</Alert> : ""}
             <CouponListToolbar />
             <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
               <ToggleButtonGroup
@@ -80,17 +82,17 @@ const Coupons = () => {
                 <Grid container spacing={3}>
                   {coupons.map((coupon) => (
                     <Grid item key={coupon._id} lg={4} md={6} xs={12}>
-                      <CouponCard coupons={coupon} />
+                      <CouponCard coupons={coupon} setMsg={setMsg} />
                     </Grid>
                   ))}
                 </Grid>
               ) : (
                 <Grid container spacing={3}>
                   {vendorCoupons
-                    .filter((item) => item.couponId != null)
+                    ?.filter((item) => item.couponId != null)
                     .map((coupon) => (
                       <Grid item key={coupon._id} lg={4} md={6} xs={12}>
-                        <CouponCard coupons={coupon.couponId} />
+                        <CouponCard coupons={coupon.couponId} setMsg={setMsg} />
                       </Grid>
                     ))}
                 </Grid>

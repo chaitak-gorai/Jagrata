@@ -33,6 +33,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useFormik } from "formik";
+import { LatestOrders } from "src/components/dashboard/latest-orders";
 
 const Order = () => {
   const router = useRouter();
@@ -41,7 +42,6 @@ const Order = () => {
   const { userInfo } = userLogin;
   const [order, setOrder] = useState([]);
   const [msg, setMsg] = useState("");
-
   useEffect(() => {
     if (!userInfo) {
       router.push("/login");
@@ -82,7 +82,11 @@ const Order = () => {
           }}
         >
           <Container maxWidth="lg">
-            <Typography sx={{ mb: 3 }} variant="h4">
+            <Typography
+              sx={{ mb: 3 }}
+              variant="h4"
+              style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+            >
               Orders
             </Typography>
             <Grid container spacing={3}>
