@@ -98,16 +98,17 @@ const Order = () => {
                           style={{ display: "flex", justifyContent: "space-between" }}
                         >
                           <Typography sx={{ pb: 2 }}>
-                            User:- {ord.userId.name} ID:{ord.userId._id}{" "}
+                            <b>User:-</b> {ord.userId.name} ID:{ord.userId._id}{" "}
                           </Typography>
                           <Typography sx={{ pb: 2 }}>
-                            Location:- {ord.location.formattedAddress}
+                            <b>Location:-</b>
+                            {ord.location.formattedAddress}
                           </Typography>
                           <Typography sx={{ pb: 2 }}>
-                            Location:- {ord.location.formattedAddress}
+                            <b>Location:-</b> {ord.location.formattedAddress}
                           </Typography>
                           <Typography sx={{ pb: 2 }}>
-                            Status
+                            <b>Status</b>
                             <SeverityPill
                               color={
                                 (ord.status === "delivered" && "success") ||
@@ -168,15 +169,24 @@ const Order = () => {
                             marginTop: "10px",
                           }}
                         >
-                          <Typography sx={{ pb: 2 }}>Sub Total:- {ord.subTotal} </Typography>
-                          <Typography sx={{ pb: 2 }}>GST:- {ord.GST} </Typography>
                           <Typography sx={{ pb: 2 }}>
-                            Packaging:- {ord.packagingCharges}{" "}
+                            <b>Sub Total:-</b> {ord.subTotal}{" "}
                           </Typography>
-                          <Typography sx={{ pb: 2 }}>Base:- {ord.baseFare} </Typography>
-                          <Typography sx={{ pb: 2 }}>Distance fee:- {ord.distanceFee} </Typography>
                           <Typography sx={{ pb: 2 }}>
-                            Total:-<SeverityPill color="success">{ord.Total}</SeverityPill>{" "}
+                            <b>GST:-</b> {ord.GST}{" "}
+                          </Typography>
+                          <Typography sx={{ pb: 2 }}>
+                            <b>Packaging:-</b> {ord.packagingCharges}{" "}
+                          </Typography>
+                          <Typography sx={{ pb: 2 }}>
+                            <b>Base:-</b> {ord.baseFare}{" "}
+                          </Typography>
+                          <Typography sx={{ pb: 2 }}>
+                            <b>Distance fee:-</b> {ord.distanceFee}{" "}
+                          </Typography>
+                          <Typography sx={{ pb: 2 }}>
+                            <b>Total:-</b>
+                            <SeverityPill color="success">{ord.Total}</SeverityPill>{" "}
                           </Typography>
                         </Grid>
                       </CardContent>
