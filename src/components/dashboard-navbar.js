@@ -42,24 +42,24 @@ export const DashboardNavbar = (props) => {
     dispatch(logout());
   };
   const [checked, setChecked] = useState(true);
-  useEffect(() => {
-    if (userInfo) {
-      const getOnline = async () => {
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${userInfo.token}`,
-          },
-        };
-        const { data } = await axios.get(
-          `https://gravitybites.in/api/vendors/getOnlineStatus/${userInfo._id}`,
-          config
-        );
-        setChecked(data.mess);
-      };
-      getOnline();
-    }
-  }, [userInfo]);
+  // useEffect(() => {
+  //   if (userInfo) {
+  //     const getOnline = async () => {
+  //       const config = {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${userInfo.token}`,
+  //         },
+  //       };
+  //       const { data } = await axios.get(
+  //         `https://gravitybites.in/api/vendors/getOnlineStatus/${userInfo._id}`,
+  //         config
+  //       );
+  //       setChecked(data.mess);
+  //     };
+  //     getOnline();
+  //   }
+  // }, [userInfo]);
   const handleChange = (event) => {
     setChecked(event.target.checked);
     dispatch(storeOnline(event.target.checked));
