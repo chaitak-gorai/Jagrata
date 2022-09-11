@@ -9,6 +9,7 @@ import {
   Card,
   Checkbox,
   MenuItem,
+  Modal,
   Table,
   TableBody,
   TableCell,
@@ -20,7 +21,7 @@ import {
 import { getInitials } from "../../utils/get-initials";
 import { SeverityPill } from "../severity-pill";
 import { Grid } from "react-bootstrap";
-import { ArrowDropDown } from "@mui/icons-material";
+import { ArrowDropDown, DeleteOutline } from "@mui/icons-material";
 
 import Menu from "@mui/material/Menu";
 import { styled, alpha } from "@mui/material/styles";
@@ -30,6 +31,9 @@ import ArchiveIcon from "@mui/icons-material/Archive";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import UpdateProduct from "./UpdateProduct";
+import axios from "axios";
+import { useSelector } from "react-redux";
 export const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
@@ -66,7 +70,9 @@ export const StyledMenu = styled((props) => (
     },
   },
 }));
-export const CustomerListResults = ({ products, ...rest }) => {
+export const CustomerListResults = ({ products, subCat, setMess, ...rest }) => {
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -117,7 +123,20 @@ export const CustomerListResults = ({ products, ...rest }) => {
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
+  const [open2, setOpen2] = useState(false);
+  const handleOpen2 = () => setOpen2(true);
+  const handleClose2 = () => setOpen2(false);
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
 
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
   return (
     <Card {...rest}>
       <PerfectScrollbar>
@@ -133,6 +152,8 @@ export const CustomerListResults = ({ products, ...rest }) => {
                 <TableCell>Veg/Non-veg</TableCell>
                 <TableCell>bestSeller</TableCell>
                 <TableCell>Chef Special</TableCell>
+                <TableCell>Edit</TableCell>
+                <TableCell>Delete</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -226,7 +247,46 @@ export const CustomerListResults = ({ products, ...rest }) => {
                       {product.chefSpecial == true ? "Special" : "No"}
                     </SeverityPill>{" "}
                   </TableCell>
-                  <TableCell>{product.createdAt}</TableCell>
+                  <TableCell>
+                    <Button color="primary" variant="contained" onClick={handleOpen2}>
+                      Edit
+                    </Button>
+                    <Modal
+                      style={{
+                        position: "absolute",
+                        marginTop: "30px",
+                        overflow: "scroll",
+                        height: "100vh",
+                      }}
+                      open={open2}
+                      onClose={handleClose2}
+                      aria-labelledby="modal-modal-title"
+                      aria-describedby="modal-modal-description"
+                    >
+                      <Box sx={style}>
+                        <UpdateProduct onclose={handleClose2} product={product} />
+                      </Box>
+                    </Modal>
+                  </TableCell>
+                  <TableCell
+                    onClick={async () => {
+                      const config = {
+                        headers: {
+                          "Content-Type": "application/json",
+                          Authorization: `Bearer ${userInfo.token}`,
+                        },
+                      };
+                      const id = product._id;
+                      const { data } = await axios.delete(
+                        `https://gravitybites.in/api/products/delete-product/${id}`,
+                        config
+                      );
+                      setMess(data.mess);
+                      console.log(data);
+                    }}
+                  >
+                    <DeleteOutline />{" "}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

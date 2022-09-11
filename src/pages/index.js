@@ -19,7 +19,7 @@ import { margin } from "@mui/system";
 const Dashboard = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const userLogin = useSelector((state) => state.userLogin);
+
   const productList = useSelector((state) => state.products);
 
   const { loading, error: productErr, products } = productList;
@@ -27,7 +27,9 @@ const Dashboard = () => {
   const { loading: adminLoad, error: adminErr, coupons } = adminCoupons;
   const vendorCouponsList = useSelector((state) => state.vendorCoupons);
   const { loading: vendorLoading, error: vendorError, vendorCoupons } = vendorCouponsList;
+  const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
   const orderList = useSelector((state) => state.ordersList);
   const { loading: orderLoading, error: orderError, orders } = orderList;
   useEffect(() => {

@@ -22,7 +22,7 @@ const Products = () => {
   // const { loading: subcatLoading, error: subcatError, subcat } = subCat;
   const { userInfo } = userLogin;
   const [subcatType, setSubcatType] = useState("Fruits");
-
+  const [mess, setMess] = useState("");
   const handleChange = (event, newSubcatType) => {
     if (newSubcatType !== null) {
       setSubcatType(newSubcatType);
@@ -30,10 +30,14 @@ const Products = () => {
     }
   };
   useEffect(() => {
+    handleChange(null, subcatType);
+  }, [dispatch, subcatType, mess]);
+
+  useEffect(() => {
     if (!userInfo) {
       router.push("/login");
     }
-    dispatch(getProducts("Fruits"));
+    dispatch(getProducts(subcatType));
     const getSubcat = async () => {
       const config = {
         headers: {
@@ -48,7 +52,7 @@ const Products = () => {
       setSubcat(data.mess);
     };
     getSubcat();
-  }, [userInfo, dispatch, router]);
+  }, [userInfo, dispatch, router, onclose, mess]);
   return (
     <>
       <Head>
@@ -90,7 +94,7 @@ const Products = () => {
               </Box> */}
           <Container maxWidth={false}>
             <Box sx={{ mt: 3 }}>
-              <CustomerListResults products={products} />
+              <CustomerListResults products={products} subCat={subCat} setMess={setMess} />
             </Box>
           </Container>
         </Container>
