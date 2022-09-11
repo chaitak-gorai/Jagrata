@@ -79,11 +79,11 @@ const Order = () => {
     boxShadow: 24,
     p: 4,
   };
-  const [open, setOpen] = useState(false);
+
   const [activeAdd, setActiveAdd] = useState("");
   const [activeAdd2, setActiveAdd2] = useState("");
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+
   return (
     <>
       <Head>
