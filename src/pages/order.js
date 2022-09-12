@@ -116,6 +116,7 @@ const Order = () => {
                     <TableRow>
                       <TableCell>Order Id</TableCell>
                       <TableCell>Name</TableCell>
+                      <TableCell>Phone</TableCell>
                       <TableCell>Product Details</TableCell>
                       <TableCell>Pick-up Address</TableCell>
                       <TableCell>Address</TableCell>
@@ -141,6 +142,7 @@ const Order = () => {
                           </Box>
                         </TableCell>
                         <TableCell>{ord.userId.name}</TableCell>
+                        <TableCell>{ord.userId.phoneNo}</TableCell>
                         <TableCell>
                           <Button
                             color="primary"
