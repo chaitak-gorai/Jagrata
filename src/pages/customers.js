@@ -21,7 +21,7 @@ const Customers = () => {
   return (
     <>
       <Head>
-        <title>Customers | Material Kit</title>
+        <title>Customers</title>
       </Head>
       <Box
         component="main"

@@ -90,7 +90,7 @@ const Menu = () => {
   return (
     <>
       <Head>
-        <title>Menu | Material Kit</title>
+        <title>Menu </title>
       </Head>
       <Box
         component="main"

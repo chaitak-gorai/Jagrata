@@ -47,7 +47,7 @@ const Coupons = () => {
     <>
       {console.log(vendorCoupons)}
       <Head>
-        <title>Coupon | Material Kit</title>
+        <title>Coupon </title>
       </Head>
       {loading ? (
         <h1>Loading...</h1>

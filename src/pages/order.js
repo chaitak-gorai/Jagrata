@@ -87,7 +87,7 @@ const Order = () => {
   return (
     <>
       <Head>
-        <title>Order | Material Kit</title>
+        <title>Order </title>
       </Head>
       <Box
         component="main"

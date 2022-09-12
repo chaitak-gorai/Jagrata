@@ -73,7 +73,7 @@ const Settings = () => {
   return (
     <>
       <Head>
-        <title>Settings | Material Kit</title>
+        <title>Settings </title>
       </Head>
       <Box
         component="main"
