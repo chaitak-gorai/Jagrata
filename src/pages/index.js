@@ -55,7 +55,12 @@ const Dashboard = () => {
           <Grid
             container
             spacing={4}
-            sx={{ marginBottom: "20px", display: "flex", justifyContent: "center" }}
+            sx={{
+              marginBottom: "20px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
             <Grid item>
               <Budget text={"orders"} value={orders ? Object.keys(orders).length : 0} />
@@ -71,6 +76,24 @@ const Dashboard = () => {
                 text={"Vendor Coupons"}
                 value={orders ? Object.keys(vendorCoupons).length : 0}
               />
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            spacing={6}
+            sx={{
+              marginBottom: "20px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              <Sales />
+            </Grid>
+
+            <Grid item lg={4} md={6} xl={3} xs={12}>
+              <TrafficByDevice sx={{ height: "100%" }} />
             </Grid>
           </Grid>
           <Grid container spacing={3}>
@@ -90,3 +113,31 @@ const Dashboard = () => {
 Dashboard.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 export default Dashboard;
+// <Container maxWidth={false}>
+//   <Grid container spacing={3}>
+//     <Grid item lg={3} sm={6} xl={3} xs={12}>
+//       <Budget />
+//     </Grid>
+//     <Grid item xl={3} lg={3} sm={6} xs={12}>
+//       <TotalCustomers />
+//     </Grid>
+//     <Grid item xl={3} lg={3} sm={6} xs={12}>
+//       <TasksProgress />
+//     </Grid>
+//     <Grid item xl={3} lg={3} sm={6} xs={12}>
+//       <TotalProfit sx={{ height: "100%" }} />
+//     </Grid>
+//     <Grid item lg={8} md={12} xl={9} xs={12}>
+//       <Sales />
+//     </Grid>
+//     <Grid item lg={4} md={6} xl={3} xs={12}>
+//       <TrafficByDevice sx={{ height: "100%" }} />
+//     </Grid>
+//     <Grid item lg={4} md={6} xl={3} xs={12}>
+//       <LatestProducts sx={{ height: "100%" }} />
+//     </Grid>
+//     <Grid item lg={8} md={12} xl={9} xs={12}>
+//       <LatestOrders />
+//     </Grid>
+//   </Grid>
+// </Container>;

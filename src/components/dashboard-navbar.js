@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "src/store/actions/userActions";
 import axios from "axios";
 import { storeOnline } from "src/store/actions/featureActions";
+import Link from "next/link";
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   boxShadow: theme.shadows[3],
@@ -186,20 +187,16 @@ export const DashboardNavbar = (props) => {
               Store Online
             </MenuItem>
             <MenuItem>
-              <Avatar /> My account
+              <Avatar />
+              <Link href="/account"> My account</Link>
             </MenuItem>
             <Divider />
-            <MenuItem>
-              <ListItemIcon>
-                <PersonAdd fontSize="small" />
-              </ListItemIcon>
-              Add another account
-            </MenuItem>
+
             <MenuItem>
               <ListItemIcon>
                 <Settings fontSize="small" />
               </ListItemIcon>
-              Settings
+              <Link href="/settings">Settings</Link>
             </MenuItem>
             <MenuItem onClick={logOutHandler}>
               <ListItemIcon>

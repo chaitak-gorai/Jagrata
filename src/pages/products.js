@@ -21,7 +21,7 @@ const Products = () => {
   const [subcat, setSubcat] = useState([]);
   // const { loading: subcatLoading, error: subcatError, subcat } = subCat;
   const { userInfo } = userLogin;
-  const [subcatType, setSubcatType] = useState("Fruits");
+  const [subcatType, setSubcatType] = useState("Vegetables");
   const [mess, setMess] = useState("");
   const handleChange = (event, newSubcatType) => {
     if (newSubcatType !== null) {
