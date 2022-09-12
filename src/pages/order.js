@@ -175,15 +175,32 @@ const Order = () => {
                                   {ord.products.map((prod) => (
                                     <TableRow key={prod._id}>
                                       <TableCell>{prod._id}</TableCell>
-                                      <TableCell>
-                                        <img
-                                          alt="Product"
-                                          src={`https://gravitybites.in${prod.productId.image}`}
-                                          width="40px"
-                                          height="40px"
-                                        />
-                                      </TableCell>
-                                      <TableCell>{prod.productId.name}</TableCell>
+                                      {prod.productId != null ? (
+                                        <>
+                                          <TableCell>
+                                            <img
+                                              alt="Product"
+                                              src={`https://gravitybites.in${prod.productId.image}`}
+                                              width="40px"
+                                              height="40px"
+                                            />
+                                          </TableCell>
+                                          <TableCell>{prod.productId.name}</TableCell>
+                                        </>
+                                      ) : (
+                                        <>
+                                          <TableCell>
+                                            <img
+                                              alt="Product"
+                                              src={`https://gravitybites.in/uploads/carrot.jpg`}
+                                              width="40px"
+                                              height="40px"
+                                            />
+                                          </TableCell>
+                                          <TableCell>Product Name</TableCell>
+                                        </>
+                                      )}
+
                                       <TableCell>{prod.quantity}</TableCell>
                                       <TableCell>{prod.price}</TableCell>
                                       <TableCell>{prod.gst}</TableCell>
