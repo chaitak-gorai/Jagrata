@@ -10,6 +10,7 @@ import { Provider } from "react-redux";
 import { store } from "../store/store";
 import { persistor } from "../store/store";
 import { PersistGate } from "redux-persist/integration/react";
+import "src/components/style.css";
 const clientSideEmotionCache = createEmotionCache();
 
 const App = (props) => {

@@ -1,8 +1,6 @@
-import React, { useState } from "react";
-import Head from "next/head";
-import NextLink from "next/link";
-import { useRouter } from "next/router";
-import { useFormik } from "formik";
+import { useState } from "react";
+import Head from "next/head"
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import {
   Alert,
@@ -17,121 +15,82 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import PersonalInfo from "src/components/signUp/personalInfo";
-import Uploads from "src/components/signUp/uploads";
-import Bank from "src/components/signUp/bankDetails";
-import Store from "src/components/signUp/StoreDetails";
-import { register } from "src/store/actions/userActions";
-import { useDispatch, useSelector } from "react-redux";
-import { margin } from "@mui/system";
-
-const Register = () => {
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const userRegister = useSelector((state) => state.userRegister);
-  const { loading, error, userInfo } = userRegister;
-
-  const formik = useFormik({
-    initialValues: {
-      fullName: "Kunal Shah",
-      storeName: "Kunal General Store",
-      phoneNo: "9000012530",
-      streetName: "Gorai",
-      streetNumber: "A-8",
-      city: "Mumbai",
-      countryCode: "India",
-      stateCode: "MH",
-      zipcode: "400092",
-      latitude: "19.232328",
-      longitude: "72.805127",
-      email: "kunal@example.com",
-      password: "Kunal@567",
-      cancelledCheque: "/uploads/docu.jpg",
-      uploadMenu: "/uploads/docu.jpg",
-      uploadPan: "/uploads/docu.jpg",
-      licenseImage: "/uploads/docu.jpg",
-      expiryDate: "02/05/2022",
-      uploadGSTcertificate: "/uploads/docu.jpg",
-      storeImage: "/uploads/docu.jpg",
-      active: true,
-      whatsappUpdate: true,
-      cashback: 2,
-      terms: true,
-      policy: true,
-      gst: "250000478965214",
-      ownerPan: "6400000964",
-      bankName: "AXIS",
-      accountHolder: "Kunal Shah",
-      accountNo: "4100000035",
-      ifsc: "AXIS",
-      upiId: "6900000054",
-      storeManager: "Owner",
-      categories: "Groceries",
-      services: "Home Delivery",
-      liscenseNo: "1502000698",
-      licenseType: "Fissai",
-      openingTime: "9:00am",
-      closingTime: "8:00pm",
-    },
-    validationSchema: Yup.object({
-      email: Yup.string().email("Must be a valid email").max(255).required("Email is required"),
-      fullName: Yup.string().max(255).required("First name is required"),
-      storeName: Yup.string().max(255).required("Last name is required"),
-      password: Yup.string().max(255).required("Password is required"),
-      phoneNo: Yup.string().max(255).required("Phone Number is required"),
-      streetName: Yup.string().max(255).required("Street is required"),
-      city: Yup.string().max(255).required("City is required"),
-      countryCode: Yup.string().max(255).required("Country is required"),
-      stateCode: Yup.string().max(255).required("state is required"),
-      bankName: Yup.string().max(255).required("Bank Name is required"),
-      accountNo: Yup.string().max(255).required("accountNo is required"),
-      accountHolder: Yup.string().max(255).required("accountHolder is required"),
-      ifsc: Yup.string().max(255).required("ifsc is required"),
-      upiId: Yup.string().max(255).required("upiId is required"),
-      storeManager: Yup.string().max(255).required("storeManager is required"),
-      categories: Yup.string().max(255).required("categories is required"),
-      services: Yup.string().max(255).required("services is required"),
-      liscenseNo: Yup.string().max(255).required("liscenseNo is required"),
-      licenseType: Yup.string().max(255).required("licenseType is required"),
-      openingTime: Yup.string().max(255).required("openingTime is required"),
-      closingTime: Yup.string().max(255).required("closingTime is required"),
-      zipcode: Yup.string().max(255).required("Zip is required"),
-      cancelledCheque: Yup.mixed().required("Checque is required"),
-      policy: Yup.boolean().oneOf([true], "This field must be checked"),
-    }),
-    onSubmit: () => {
-      console.log(formik.values);
-      dispatch(register(formik.values));
-      // router.push("/login");
-    },
+export default function App() {
+  const [data, setData] = useState({
+      email: "",
+      fullName: "",
+      storeName: "",
+      password: "",
+      phoneNo: "",
+      streetName: "",
+      city: "",
+      pinCode:"",
+      countryCode: "",
+      stateCode: "",
   });
+  const [currentStep, setCurrentStep] = useState(0);
+  const [errors, setErrors] = useState({});
 
-  // const handleCheque = (e) => {
-  //   formik.setFieldValue("cancelledCheque", e.target.files[0]);
-  //   console.log(formik.values.cancelledCheque);
-  // };
+  const makeRequest = (formData) => {
+    console.log("Form Submitted", formData);
+  };
 
-  const [page, setPage] = useState(0);
-  const [formData, setFormData] = useState({
-  });
+  const handleNextStep = (newData, final = false) => {
+    setData((prev) => ({ ...prev, ...newData }));
 
-  const FormTitles = ["Personal Informations","Uploads", "Bank Details", "Store Details"];
-
-  const PageDisplay = () => {
-    if (page === 0) {
-      return <PersonalInfo  />;
-    } else if (page === 1) {
-      return <Uploads  />;
-    } else if (page === 2) {
-      return <Bank  />;
-    } else {
-      return <Store  />;
+    if (final) {
+      makeRequest(newData);
+      return;
     }
+
+    setCurrentStep((prev) => prev + 1);
+  };
+
+  const handlePrevStep = (newData) => {
+    setData((prev) => ({ ...prev, ...newData }));
+    setCurrentStep((prev) => prev - 1);
+  };
+
+  const steps = [
+    <PersonalInfo key={1} next={handleNextStep} data={data} errors={errors} />,
+    // <StepTwo key={2} next={handleNextStep} prev={handlePrevStep} data={data} />,
+  ];
+
+  console.log("data", data);
+
+  return <>
+    <Container>
+    <Box sx={{ my: 3 }}>
+            <Typography color="textPrimary" variant="h4">
+              Create a new account
+            </Typography>
+          </Box>
+          {steps[currentStep]}
+    </Container></>
+    ;
+}
+
+const PersonalInfoValidationSchema = Yup.object({
+  email: Yup.string().email("Must be a valid email").max(255).required("Email is required"),
+  fullName: Yup.string().max(255).required("Name is required"),
+  storeName: Yup.string().max(255).required("Last name is required"),
+  password: Yup.string().max(255).required("Password is required"),
+  phoneNo: Yup.number().required("Phone Number is required"),
+  streetName: Yup.string().max(255).required("Street is required"),
+  city: Yup.string().max(255).required("City is required"),
+  countryCode: Yup.string().max(255).required("Country is required"),
+  stateCode: Yup.string().max(255).required("State is required"),
+  pinCode: Yup.number().required("Pin Code is required"),
+});
+
+const PersonalInfo = (props) => {
+  const handleSubmit = (values) => {
+    props.next(values);
   };
 
   return (
     <>
-      <Head>
+    <Head>
         <title>Register </title>
       </Head>
       <Box
@@ -144,77 +103,460 @@ const Register = () => {
         }}
       >
         <Container maxWidth="lg">
-          {error && <p>{error}</p>}
 
+          
+      <Formik
+      validationSchema={PersonalInfoValidationSchema}
+      initialValues={props.data}
+      onSubmit={handleSubmit}
+    >
+      {() => (
+        <Form>
           <Box sx={{ my: 3 }}>
-            <Typography color="textPrimary" variant="h4">
-              Create a new account
-            </Typography>
-            <Typography color="textSecondary" gutterBottom variant="body2">
-              Use your email to create a new account
+            <Typography color="textPrimary" variant="h5">
+              Personal Informations
             </Typography>
           </Box>
-          {PageDisplay()}
-          <Box></Box>
-          <Box>
-            <Button color="primary" size="large"  variant="contained" sx={{margin:4}}
-              disabled={page == 0}
-              onClick={() => {
-                setPage((currPage) => currPage - 1);
-              }}
-            >
-              Prev
-            </Button>
-            <Button color="primary" size="large" variant="contained"
-              onClick={() => {
-                if (page === FormTitles.length - 1) {
-                  alert("FORM SUBMITTED");
-                  console.log(formik.values);
-                  // console.log(formData);
-                } else {
-                  setPage((currPage) => currPage + 1);
-                }
-              }}
-            >
-              {page === FormTitles.length - 1 ? <Button
-              color="primary"
-              disabled={formik.isSubmitting}
-              fullWidth
-              size="large"
-              type="submit"
-              variant="contained"
-            >
-              Sign Up Now
-            </Button> : "Next"}
-            </Button>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={4}>
+              <Field label="Full Name" margin="normal" name="fullName" variant="outlined" className="field" placeholder="Name"/>
+              <ErrorMessage name="fullName" />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Field label="Store Name" margin="normal" name="storeName" variant="outlined" className="field" placeholder="Store Name" />
+              <ErrorMessage name="storeName" />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Field
+                label="Phone Number"
+                margin="normal"
+                name="phoneNo"
+                type="number"
+                variant="outlined" className="field" placeholder="Phone No."
+              />
+              <ErrorMessage name="phoneNo" />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Field
+                label="Email Address"
+                margin="normal"
+                name="email"
+                type="email"
+                variant="outlined" className="field" placeholder="Email"
+              />
+              <ErrorMessage name="email" />
+            </Grid>
+            <Grid item xs={8}>
+              <Field
+                label="Password"
+                margin="normal"
+                name="password"
+                type="password"
+                variant="outlined" className="field" placeholder="Password"
+              />
+              <ErrorMessage name="password" />
+            </Grid>
+          </Grid>
+          <Box sx={{ my: 3 }}>
+            <Typography color="textSecondary" gutterBottom variant="h5">
+              Address
+            </Typography>
           </Box>
-          {Boolean(formik.touched.policy && formik.errors.policy) && (
-            <FormHelperText error>{formik.errors.policy}</FormHelperText>
-          )}
-          {/* <Box sx={{ py: 2 }}>
-            <Button
-              color="primary"
-              disabled={formik.isSubmitting}
-              fullWidth
-              size="large"
-              type="submit"
-              variant="contained"
-            >
-              Sign Up Now
-            </Button>
-          </Box>*/}
-          <Typography color="textSecondary" variant="body2">
-            Have an account?{" "}
-            <NextLink href="/login" passHref>
-              <Link variant="subtitle2" underline="hover">
-                Sign In
-              </Link>
-            </NextLink>
-          </Typography> 
-        </Container>
-      </Box>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={4}>
+              <Field label="StreetName" margin="normal" name="streetName" variant="outlined" className="field" placeholder="Street Name" />
+              <ErrorMessage name="streetName" />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Field label="City" margin="normal" name="city" variant="outlined" className="field" placeholder="City" />
+              <ErrorMessage name="city" />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Field
+                label="Country"
+                margin="normal"
+                name="countryCode"
+                type="text"
+                variant="outlined" className="field" placeholder="Country"
+              />
+              <ErrorMessage name="countryCode" />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Field
+                label="Zip Code"
+                margin="normal"
+                name="pinCode"
+                type="number"
+                variant="outlined" className="field" placeholder="Pin code"
+              />
+              <ErrorMessage name="pinCode" />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Field
+                label="State"
+                margin="normal"
+                name="stateCode"
+                type="stateCode"
+                variant="outlined" className="field" placeholder="State"
+              />
+              <ErrorMessage name="stateCode" />
+            </Grid>
+          </Grid>
+          <Button color="primary" size="large"  variant="contained" sx={{margin:4}} type="submit">Next</Button>
+        </Form>
+      )}
+    </Formik>
+    </Container>
+    </Box>
     </>
+    
   );
 };
 
-export default Register;
+
+const stepOneValidationSchema = Yup.object({
+  email: Yup.string().email("Must be a valid email").max(255).required("Email is required"),
+  fullName: Yup.string().max(255).required("Name is required"),
+  storeName: Yup.string().max(255).required("Last name is required"),
+  password: Yup.string().max(255).required("Password is required"),
+  phoneNo: Yup.number().required("Phone Number is required"),
+  streetName: Yup.string().max(255).required("Street is required"),
+  city: Yup.string().max(255).required("City is required"),
+  countryCode: Yup.string().max(255).required("Country is required"),
+  stateCode: Yup.string().max(255).required("State is required"),
+  pinCode: Yup.number().required("Pin Code is required"),
+});
+
+const StepOne = (props) => {
+  const handleSubmit = (values) => {
+    props.next(values);
+  };
+
+  return (
+    <>
+    <Head>
+        <title>Register </title>
+      </Head>
+      <Box
+        component="main"
+        sx={{
+          alignItems: "center",
+          display: "flex",
+          flexGrow: 1,
+          minHeight: "100%",
+        }}
+      >
+        <Container maxWidth="lg">
+
+          
+      <Formik
+      validationSchema={stepOneValidationSchema}
+      initialValues={props.data}
+      onSubmit={handleSubmit}
+    >
+      {() => (
+        <Form>
+          <Box sx={{ my: 3 }}>
+            <Typography color="textPrimary" variant="h5">
+              Personal Informations
+            </Typography>
+          </Box>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={4}>
+              <Field label="Full Name" margin="normal" name="fullName" variant="outlined" className="field" placeholder="Name"/>
+              <ErrorMessage name="fullName" />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Field label="Store Name" margin="normal" name="storeName" variant="outlined" className="field" placeholder="Store Name" />
+              <ErrorMessage name="storeName" />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Field
+                label="Phone Number"
+                margin="normal"
+                name="phoneNo"
+                type="number"
+                variant="outlined" className="field" placeholder="Phone No."
+              />
+              <ErrorMessage name="phoneNo" />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Field
+                label="Email Address"
+                margin="normal"
+                name="email"
+                type="email"
+                variant="outlined" className="field" placeholder="Email"
+              />
+              <ErrorMessage name="email" />
+            </Grid>
+            <Grid item xs={8}>
+              <Field
+                label="Password"
+                margin="normal"
+                name="password"
+                type="password"
+                variant="outlined" className="field" placeholder="Password"
+              />
+              <ErrorMessage name="password" />
+            </Grid>
+          </Grid>
+          <Box sx={{ my: 3 }}>
+            <Typography color="textSecondary" gutterBottom variant="h5">
+              Address
+            </Typography>
+          </Box>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={4}>
+              <Field label="StreetName" margin="normal" name="streetName" variant="outlined" className="field" placeholder="Street Name" />
+              <ErrorMessage name="streetName" />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Field label="City" margin="normal" name="city" variant="outlined" className="field" placeholder="City" />
+              <ErrorMessage name="city" />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Field
+                label="Country"
+                margin="normal"
+                name="countryCode"
+                type="text"
+                variant="outlined" className="field" placeholder="Country"
+              />
+              <ErrorMessage name="countryCode" />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Field
+                label="Zip Code"
+                margin="normal"
+                name="pinCode"
+                type="number"
+                variant="outlined" className="field" placeholder="Pin code"
+              />
+              <ErrorMessage name="pinCode" />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Field
+                label="State"
+                margin="normal"
+                name="stateCode"
+                type="stateCode"
+                variant="outlined" className="field" placeholder="State"
+              />
+              <ErrorMessage name="stateCode" />
+            </Grid>
+          </Grid>
+          <Button color="primary" size="large"  variant="contained" sx={{margin:4}} type="submit">Next</Button>
+        </Form>
+      )}
+    </Formik>
+    </Container>
+    </Box>
+    </>
+    
+  );
+};
+
+// const stepTwoValidationSchema = Yup.object({
+//   email: Yup.string().required().email().label("Email"),
+//   password: Yup.string().required().label("Password"),
+// });
+
+// const StepTwo = (props) => {
+//   const handleSubmit = (values) => {
+//     props.next(values, true);
+//   };
+
+//   return (
+//     <Formik
+//       validationSchema={stepTwoValidationSchema}
+//       initialValues={props.data}
+//       onSubmit={handleSubmit}
+//     >
+//       {({ values }) => (
+//         <Form>
+//           <Box sx={{ my: 3 }}>
+//               <Typography color="textSecondary" gutterBottom variant="h5">
+//                 Uploads
+//               </Typography>
+//             </Box>
+//             <Grid container spacing={2}>
+//               <Grid item xs={4}>
+//                 <label htmlFor="cancelledCheque">
+//                   <Button
+//                     variant="contained"
+//                     component="span"
+//                     color="primary"
+//                   >
+//                     Upload Cancelled Cheque
+//                   </Button>
+//                   <input
+//                     accept="image/*"
+//                     id="cancelledCheque"
+//                     type="file"
+//                     style={{ display: "none" }}
+//                     onChange={(e) => {
+//                       formik.setFieldValue("cancelledCheque", e.target.files[0]);
+//                       console.log(e.target.files[0].name);
+//                     }}
+//                   />
+//                   <Typography variant="body2">
+//                     {formik.values.cancelledCheque
+//                       ? formik.values.cancelledCheque.name
+//                       : "No file chosen"}
+//                   </Typography>
+//                 </label>
+//               </Grid>
+//               <Grid item xs={4}>
+//                 <label htmlFor="uploadMenu">
+//                   <Button
+//                     variant="contained"
+//                     component="span"
+//                     color="primary"
+//                     error={Boolean(formik.touched.uploadMenu && formik.errors.uploadMenu)}
+//                     helpertext={formik.touched.uploadMenu && formik.errors.uploadMenu}
+//                     onChange={formik.handleChange}
+//                     fullWidth
+//                   >
+//                     Upload Menu
+//                   </Button>
+//                   <input
+//                     accept="image/*"
+//                     id="uploadMenu"
+//                     type="file"
+//                     style={{ display: "none" }}
+//                     onChange={(e) => {
+//                       formik.setFieldValue("uploadMenu", e.target.files[0]);
+//                       console.log(e.target.files[0].name);
+//                     }}
+//                   />
+//                   <Typography variant="body2">
+//                     {formik.values.uploadMenu ? formik.values.uploadMenu.name : "No file chosen"}
+//                   </Typography>
+//                 </label>
+//               </Grid>
+//               <Grid item xs={4}>
+//                 <label htmlFor="uploadPan">
+//                   <Button
+//                     variant="contained"
+//                     component="span"
+//                     color="primary"
+//                     error={Boolean(formik.touched.uploadPan && formik.errors.uploadPan)}
+//                     helpertext={formik.touched.uploadPan && formik.errors.uploadPan}
+//                     onChange={formik.handleChange}
+//                     fullWidth
+//                   >
+//                     Upload Pan
+//                   </Button>
+//                   <input
+//                     accept="image/*"
+//                     id="uploadPan"
+//                     type="file"
+//                     style={{ display: "none" }}
+//                     onChange={(e) => {
+//                       formik.setFieldValue("uploadPan", e.target.files[0]);
+//                       console.log(e.target.files[0].name);
+//                     }}
+//                   />
+//                   <Typography variant="body2">
+//                     {formik.values.uploadPan ? formik.values.uploadPan.name : "No file chosen"}
+//                   </Typography>
+//                 </label>
+//               </Grid>
+//               <Grid item xs={4}>
+//                 <label htmlFor="licenseImage">
+//                   <Button
+//                     variant="contained"
+//                     component="span"
+//                     color="primary"
+//                     error={Boolean(formik.touched.licenseImage && formik.errors.licenseImage)}
+//                     helpertext={formik.touched.licenseImage && formik.errors.licenseImage}
+//                     onChange={formik.handleChange}
+//                     fullWidth
+//                   >
+//                     Upload License
+//                   </Button>
+//                   <input
+//                     accept="image/*"
+//                     id="licenseImage"
+//                     type="file"
+//                     style={{ display: "none" }}
+//                     onChange={(e) => {
+//                       formik.setFieldValue("licenseImage", e.target.files[0]);
+//                       console.log(e.target.files[0].name);
+//                     }}
+//                   />
+//                   <Typography variant="body2">
+//                     {formik.values.licenseImage
+//                       ? formik.values.licenseImage.name
+//                       : "No file chosen"}
+//                   </Typography>
+//                 </label>
+//               </Grid>
+//               <Grid item xs={4}>
+//                 <label htmlFor="gst">
+//                   <Button
+//                     variant="contained"
+//                     component="span"
+//                     color="primary"
+//                     error={Boolean(formik.touched.gst && formik.errors.gst)}
+//                     helpertext={formik.touched.gst && formik.errors.gst}
+//                     onChange={formik.handleChange}
+//                     fullWidth
+//                   >
+//                     Upload GST
+//                   </Button>
+//                   <input
+//                     accept="image/*"
+//                     id="gst"
+//                     type="file"
+//                     style={{ display: "none" }}
+//                     onChange={(e) => {
+//                       formik.setFieldValue("gst", e.target.files[0]);
+//                       console.log(e.target.files[0].name);
+//                     }}
+//                   />
+//                   <Typography variant="body2">
+//                     {formik.values.gst ? formik.values.gst.name : "No file chosen"}
+//                   </Typography>
+//                 </label>
+//               </Grid>
+//               <Grid item xs={4}>
+//                 <label htmlFor="storeImage">
+//                   <Button
+//                     variant="contained"
+//                     component="span"
+//                     color="primary"
+//                     error={Boolean(formik.touched.storeImage && formik.errors.storeImage)}
+//                     helpertext={formik.touched.storeImage && formik.errors.storeImage}
+//                     onChange={formik.handleChange}
+//                     fullWidth
+//                   >
+//                     Upload Store Image
+//                   </Button>
+//                   <input
+//                     accept="image/*"
+//                     id="storeImage"
+//                     type="file"
+//                     style={{ display: "none" }}
+//                     onChange={(e) => {
+//                       formik.setFieldValue("storeImage", e.target.files[0]);
+//                       console.log(e.target.files[0].name);
+//                     }}
+//                   />
+//                   <Typography variant="body2">
+//                     {formik.values.storeImage ? formik.values.storeImage.name : "No file chosen"}
+//                   </Typography>
+//                 </label>
+//               </Grid>
+//             </Grid>
+
+//           <button type="button" onClick={() => props.prev(values)}>
+//             Back
+//           </button>
+//           <button type="submit">Submit</button>
+//         </Form>
+//       )}
+//     </Formik>
+//   );
+// };

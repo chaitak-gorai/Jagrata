@@ -1,0 +1,15 @@
+.field{
+    height: 42px;
+    width : 315px;
+    border-radius:5px ;
+    border-width: 2px ;
+    border-color: rgb(23, 33, 224);
+    background-color: #E8F0FE;
+    border:none;
+    display: flex;
+    justify-content: center;
+    align-items: center; margin-left: 2px;
+    padding: 7px;
+    font-weight: 500;
+    font-size: large;
+}
