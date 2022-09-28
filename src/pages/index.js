@@ -4,6 +4,8 @@ import { Budget } from "../components/dashboard/budget";
 import { LatestOrders } from "../components/dashboard/latest-orders";
 import { LatestProducts } from "../components/dashboard/latest-products";
 import { Sales } from "../components/dashboard/sales";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { TasksProgress } from "../components/dashboard/tasks-progress";
 import { TotalCustomers } from "../components/dashboard/total-customers";
 import { TotalProfit } from "../components/dashboard/total-profit";
@@ -52,6 +54,19 @@ const Dashboard = () => {
         }}
       >
         <Container maxWidth={false}>
+        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <ToggleButtonGroup
+              sx={{ mt: 3, mb: 3 }}
+              color="primary"
+              // value={couponType}
+              exclusive
+              // onChange={handleChange}
+              aria-label="Platform"
+            >
+              <ToggleButton value="admin">Online</ToggleButton>
+              <ToggleButton value="vendor">Offline</ToggleButton>
+            </ToggleButtonGroup>
+          </Box>
           <Grid
             container
             spacing={4}
@@ -62,6 +77,7 @@ const Dashboard = () => {
               alignItems: "center",
             }}
           >
+                    
             <Grid item>
               <Budget text={"orders"} value={orders ? Object.keys(orders).length : 0} />
             </Grid>

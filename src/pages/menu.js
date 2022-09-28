@@ -113,50 +113,7 @@ const Menu = () => {
             <Grid container spacing={3}>
               <Grid item lg={12} md={6} xs={12}>
                 <Card>
-                  <CardContent>
-                    {msg != "" ? <Alert severity="success">{msg}</Alert> : ""}
-                    <TableContainer component={Paper}>
-                      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead>
-                          <TableRow>
-                            <TableCell align="center">Product Name</TableCell>
-                            <TableCell align="center">Product Price</TableCell>
-                            <TableCell align="center"></TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {menu.map((row) => (
-                            <TableRow
-                              key={row._id}
-                              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                            >
-                              <TableCell align="center">{row.productName}</TableCell>
-                              <TableCell align="center">{row.productPrice}</TableCell>
-                              <TableCell align="center">
-                                <DeleteIcon
-                                  onClick={async () => {
-                                    const config = {
-                                      headers: {
-                                        "Content-Type": "application/json",
-                                        Authorization: `Bearer ${userInfo.token}`,
-                                      },
-                                    };
-                                    await axios.post(
-                                      `https://gravitybites.in/api/stores/removefromMenu`,
-                                      { productName: row.productName },
-                                      config
-                                    );
-                                    setMsg(`${row.productName} Deleted`);
-                                  }}
-                                />
-                              </TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
-                  </CardContent>
-                  <Divider />
+              
                   <Box
                     component="main"
                     sx={{
@@ -169,7 +126,6 @@ const Menu = () => {
                     <Container maxWidth="lg">
                       <form onSubmit={formik.handleSubmit}>
                         <Card>
-                          <Divider />
                           <CardContent>
                             <Grid container spacing={3}>
                               <Grid item md={6} xs={12}>
@@ -228,6 +184,52 @@ const Menu = () => {
                       </form>
                     </Container>
                   </Box>
+
+                  <Divider />
+                  
+                  <CardContent>
+                    {msg != "" ? <Alert severity="success">{msg}</Alert> : ""}
+                    <TableContainer component={Paper}>
+                      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableHead>
+                          <TableRow>
+                            <TableCell align="center">Product Name</TableCell>
+                            <TableCell align="center">Product Price</TableCell>
+                            <TableCell align="center"></TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {menu.map((row) => (
+                            <TableRow
+                              key={row._id}
+                              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                            >
+                              <TableCell align="center">{row.productName}</TableCell>
+                              <TableCell align="center">{row.productPrice}</TableCell>
+                              <TableCell align="center">
+                                <DeleteIcon
+                                  onClick={async () => {
+                                    const config = {
+                                      headers: {
+                                        "Content-Type": "application/json",
+                                        Authorization: `Bearer ${userInfo.token}`,
+                                      },
+                                    };
+                                    await axios.post(
+                                      `https://gravitybites.in/api/stores/removefromMenu`,
+                                      { productName: row.productName },
+                                      config
+                                    );
+                                    setMsg(`${row.productName} Deleted`);
+                                  }}
+                                />
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  </CardContent>
                 </Card>
               </Grid>
             </Grid>

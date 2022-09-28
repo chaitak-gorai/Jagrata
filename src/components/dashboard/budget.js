@@ -1,8 +1,11 @@
 import { Avatar, Box, Card, CardContent, Grid, Typography } from "@mui/material";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import MoneyIcon from "@mui/icons-material/Money";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
 export const Budget = (props) => (
+  
   <Card sx={{ height: "100%" }} {...props}>
     <CardContent>
       <Grid container spacing={3} sx={{ justifyContent: "space-between" }}>
@@ -14,6 +17,7 @@ export const Budget = (props) => (
             {props.value}
           </Typography>
         </Grid>
+        
         <Grid item>
           <Avatar
             sx={{

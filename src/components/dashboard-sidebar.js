@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
-import { Box, Button, Divider, Drawer, Typography, useMediaQuery } from "@mui/material";
+import { Avatar, Box, Button, Divider, Drawer, Typography, useMediaQuery } from "@mui/material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { ChartBar as ChartBarIcon } from "../icons/chart-bar";
 import { Cog as CogIcon } from "../icons/cog";
@@ -17,7 +18,7 @@ import { User as UserIcon } from "../icons/user";
 import { UserAdd as UserAddIcon } from "../icons/user-add";
 import { Users as UsersIcon } from "../icons/users";
 import { XCircle as XCircleIcon } from "../icons/x-circle";
-import { Logo } from "./logo";
+import Logo1 from "../../public/static/images/avatars/avatar_1.png";
 import { NavItem } from "./nav-item";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -121,12 +122,20 @@ export const DashboardSidebar = (props) => {
           <Box sx={{ p: 3 }}>
             <NextLink href="/account" passHref>
               <a>
-                <Logo
+                <Box
                   sx={{
-                    height: 42,
-                    width: 42,
+                    height: 70,
+                    width: 70,
+                    marginLeft: "35%",
                   }}
-                />
+                >
+                  <Avatar
+                    sx={{
+                      height: 70,
+                      width: 70,
+                    }}
+                  />
+                </Box>
               </a>
             </NextLink>
           </Box>
