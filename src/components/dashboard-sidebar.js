@@ -18,7 +18,7 @@ import { User as UserIcon } from "../icons/user";
 import { UserAdd as UserAddIcon } from "../icons/user-add";
 import { Users as UsersIcon } from "../icons/users";
 import { XCircle as XCircleIcon } from "../icons/x-circle";
-import Logo1 from "../../public/static/images/avatars/avatar_1.png";
+import Logo1 from "../static/images/avatars/avatar_1.png";
 import { NavItem } from "./nav-item";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -129,6 +129,7 @@ export const DashboardSidebar = (props) => {
                     marginLeft: "35%",
                   }}
                 >
+                  {/* <img src={Logo1}/> */}
                   <Avatar
                     sx={{
                       height: 70,

@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import Head from "next/head";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
@@ -16,9 +17,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import PersonalInfo from "src/components/signUp/personalInfo";
+import Uploads from "src/components/signUp/uploads";
+import Bank from "src/components/signUp/bankDetails";
+import Store from "src/components/signUp/StoreDetails";
 import { register } from "src/store/actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
+import { margin } from "@mui/system";
 
 const Register = () => {
   const router = useRouter();
@@ -105,6 +110,25 @@ const Register = () => {
   //   formik.setFieldValue("cancelledCheque", e.target.files[0]);
   //   console.log(formik.values.cancelledCheque);
   // };
+
+  const [page, setPage] = useState(0);
+  const [formData, setFormData] = useState({
+  });
+
+  const FormTitles = ["Personal Informations","Uploads", "Bank Details", "Store Details"];
+
+  const PageDisplay = () => {
+    if (page === 0) {
+      return <PersonalInfo  />;
+    } else if (page === 1) {
+      return <Uploads  />;
+    } else if (page === 2) {
+      return <Bank  />;
+    } else {
+      return <Store  />;
+    }
+  };
+
   return (
     <>
       <Head>
@@ -121,584 +145,72 @@ const Register = () => {
       >
         <Container maxWidth="lg">
           {error && <p>{error}</p>}
-          <form onSubmit={formik.handleSubmit}>
-            <Box sx={{ my: 3 }}>
-              <Typography color="textPrimary" variant="h4">
-                Create a new account
-              </Typography>
-              <Typography color="textSecondary" gutterBottom variant="body2">
-                Use your email to create a new account
-              </Typography>
-            </Box>
-            <Grid container spacing={2}>
-              <Grid item xs={4}>
-                <TextField
-                  error={Boolean(formik.touched.fullName && formik.errors.fullName)}
-                  fullWidth
-                  helpertext={formik.touched.fullName && formik.errors.fullName}
-                  label="Full Name"
-                  margin="normal"
-                  name="fullName"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.fullName}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  error={Boolean(formik.touched.storeName && formik.errors.storeName)}
-                  fullWidth
-                  helpertext={formik.touched.storeName && formik.errors.storeName}
-                  label="Store Name"
-                  margin="normal"
-                  name="storeName"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.storeName}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  error={Boolean(formik.touched.phoneNo && formik.errors.phoneNo)}
-                  fullWidth
-                  helpertext={formik.touched.phoneNo && formik.errors.phoneNo}
-                  label="Phone Number"
-                  margin="normal"
-                  name="phoneNo"
-                  type="number"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.phoneNo}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  error={Boolean(formik.touched.email && formik.errors.email)}
-                  fullWidth
-                  helpertext={formik.touched.email && formik.errors.email}
-                  label="Email Address"
-                  margin="normal"
-                  name="email"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  type="email"
-                  value={formik.values.email}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  error={Boolean(formik.touched.password && formik.errors.password)}
-                  fullWidth
-                  helpertext={formik.touched.password && formik.errors.password}
-                  label="Password"
-                  margin="normal"
-                  name="password"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  type="password"
-                  value={formik.values.password}
-                  variant="outlined"
-                />
-              </Grid>
-            </Grid>
-            <Box sx={{ my: 3 }}>
-              <Typography color="textSecondary" gutterBottom variant="h5">
-                Address
-              </Typography>
-            </Box>
-            <Grid container spacing={2}>
-              <Grid item xs={4}>
-                <TextField
-                  error={Boolean(formik.touched.streetName && formik.errors.streetName)}
-                  fullWidth
-                  helpertext={formik.touched.streetName && formik.errors.streetName}
-                  label="StreetName"
-                  margin="normal"
-                  name="streetName"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.streetName}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  error={Boolean(formik.touched.city && formik.errors.city)}
-                  fullWidth
-                  helpertext={formik.touched.city && formik.errors.city}
-                  label="City"
-                  margin="normal"
-                  name="city"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.city}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  error={Boolean(formik.touched.countryCode && formik.errors.countryCode)}
-                  fullWidth
-                  helpertext={formik.touched.countryCode && formik.errors.countryCode}
-                  label="Country"
-                  margin="normal"
-                  name="countryCode"
-                  type="text"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.countryCode}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  error={Boolean(formik.touched.zipcode && formik.errors.zipcode)}
-                  fullWidth
-                  helpertext={formik.touched.zipcode && formik.errors.zipcode}
-                  label="Zip Code"
-                  margin="normal"
-                  name="zipcode"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  type="number"
-                  value={formik.values.zipcode}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  error={Boolean(formik.touched.stateCode && formik.errors.stateCode)}
-                  fullWidth
-                  helpertext={formik.touched.stateCode && formik.errors.stateCode}
-                  label="State"
-                  margin="normal"
-                  name="stateCode"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  type="stateCode"
-                  value={formik.values.stateCode}
-                  variant="outlined"
-                />
-              </Grid>
-            </Grid>
-            <Box sx={{ my: 3 }}>
-              <Typography color="textSecondary" gutterBottom variant="h5">
-                Uploads
-              </Typography>
-            </Box>
-            <Grid container spacing={2}>
-              <Grid item xs={4}>
-                <label htmlFor="cancelledCheque">
-                  <Button
-                    variant="contained"
-                    component="span"
-                    color="primary"
-                    error={Boolean(formik.touched.cancelledCheque && formik.errors.cancelledCheque)}
-                    helpertext={formik.touched.cancelledCheque && formik.errors.cancelledCheque}
-                    onChange={formik.handleChange}
-                    fullWidth
-                  >
-                    Upload Cancelled Cheque
-                  </Button>
-                  <input
-                    accept="image/*"
-                    id="cancelledCheque"
-                    type="file"
-                    style={{ display: "none" }}
-                    onChange={(e) => {
-                      formik.setFieldValue("cancelledCheque", e.target.files[0]);
-                      console.log(e.target.files[0].name);
-                    }}
-                  />
-                  <Typography variant="body2">
-                    {formik.values.cancelledCheque
-                      ? formik.values.cancelledCheque.name
-                      : "No file chosen"}
-                  </Typography>
-                </label>
-              </Grid>
-              <Grid item xs={4}>
-                <label htmlFor="uploadMenu">
-                  <Button
-                    variant="contained"
-                    component="span"
-                    color="primary"
-                    error={Boolean(formik.touched.uploadMenu && formik.errors.uploadMenu)}
-                    helpertext={formik.touched.uploadMenu && formik.errors.uploadMenu}
-                    onChange={formik.handleChange}
-                    fullWidth
-                  >
-                    Upload Menu
-                  </Button>
-                  <input
-                    accept="image/*"
-                    id="uploadMenu"
-                    type="file"
-                    style={{ display: "none" }}
-                    onChange={(e) => {
-                      formik.setFieldValue("uploadMenu", e.target.files[0]);
-                      console.log(e.target.files[0].name);
-                    }}
-                  />
-                  <Typography variant="body2">
-                    {formik.values.uploadMenu ? formik.values.uploadMenu.name : "No file chosen"}
-                  </Typography>
-                </label>
-              </Grid>
-              <Grid item xs={4}>
-                <label htmlFor="uploadPan">
-                  <Button
-                    variant="contained"
-                    component="span"
-                    color="primary"
-                    error={Boolean(formik.touched.uploadPan && formik.errors.uploadPan)}
-                    helpertext={formik.touched.uploadPan && formik.errors.uploadPan}
-                    onChange={formik.handleChange}
-                    fullWidth
-                  >
-                    Upload Pan
-                  </Button>
-                  <input
-                    accept="image/*"
-                    id="uploadPan"
-                    type="file"
-                    style={{ display: "none" }}
-                    onChange={(e) => {
-                      formik.setFieldValue("uploadPan", e.target.files[0]);
-                      console.log(e.target.files[0].name);
-                    }}
-                  />
-                  <Typography variant="body2">
-                    {formik.values.uploadPan ? formik.values.uploadPan.name : "No file chosen"}
-                  </Typography>
-                </label>
-              </Grid>
-              <Grid item xs={4}>
-                <label htmlFor="licenseImage">
-                  <Button
-                    variant="contained"
-                    component="span"
-                    color="primary"
-                    error={Boolean(formik.touched.licenseImage && formik.errors.licenseImage)}
-                    helpertext={formik.touched.licenseImage && formik.errors.licenseImage}
-                    onChange={formik.handleChange}
-                    fullWidth
-                  >
-                    Upload License
-                  </Button>
-                  <input
-                    accept="image/*"
-                    id="licenseImage"
-                    type="file"
-                    style={{ display: "none" }}
-                    onChange={(e) => {
-                      formik.setFieldValue("licenseImage", e.target.files[0]);
-                      console.log(e.target.files[0].name);
-                    }}
-                  />
-                  <Typography variant="body2">
-                    {formik.values.licenseImage
-                      ? formik.values.licenseImage.name
-                      : "No file chosen"}
-                  </Typography>
-                </label>
-              </Grid>
-              <Grid item xs={4}>
-                <label htmlFor="gst">
-                  <Button
-                    variant="contained"
-                    component="span"
-                    color="primary"
-                    error={Boolean(formik.touched.gst && formik.errors.gst)}
-                    helpertext={formik.touched.gst && formik.errors.gst}
-                    onChange={formik.handleChange}
-                    fullWidth
-                  >
-                    Upload GST
-                  </Button>
-                  <input
-                    accept="image/*"
-                    id="gst"
-                    type="file"
-                    style={{ display: "none" }}
-                    onChange={(e) => {
-                      formik.setFieldValue("gst", e.target.files[0]);
-                      console.log(e.target.files[0].name);
-                    }}
-                  />
-                  <Typography variant="body2">
-                    {formik.values.gst ? formik.values.gst.name : "No file chosen"}
-                  </Typography>
-                </label>
-              </Grid>
-              <Grid item xs={4}>
-                <label htmlFor="storeImage">
-                  <Button
-                    variant="contained"
-                    component="span"
-                    color="primary"
-                    error={Boolean(formik.touched.storeImage && formik.errors.storeImage)}
-                    helpertext={formik.touched.storeImage && formik.errors.storeImage}
-                    onChange={formik.handleChange}
-                    fullWidth
-                  >
-                    Upload Store Image
-                  </Button>
-                  <input
-                    accept="image/*"
-                    id="storeImage"
-                    type="file"
-                    style={{ display: "none" }}
-                    onChange={(e) => {
-                      formik.setFieldValue("storeImage", e.target.files[0]);
-                      console.log(e.target.files[0].name);
-                    }}
-                  />
-                  <Typography variant="body2">
-                    {formik.values.storeImage ? formik.values.storeImage.name : "No file chosen"}
-                  </Typography>
-                </label>
-              </Grid>
-            </Grid>
-            <Box sx={{ my: 3 }}>
-              <Typography color="textSecondary" gutterBottom variant="h5">
-                Bank Details
-              </Typography>
-            </Box>
-            <Grid container spacing={2}>
-              <Grid item xs={4}>
-                <TextField
-                  error={Boolean(formik.touched.bankName && formik.errors.bankName)}
-                  fullWidth
-                  helpertext={formik.touched.bankName && formik.errors.bankName}
-                  label="Bank Name"
-                  margin="normal"
-                  name="bankName"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.bankName}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  error={Boolean(formik.touched.accountHolder && formik.errors.accountHolder)}
-                  fullWidth
-                  helpertext={formik.touched.accountHolder && formik.errors.accountHolder}
-                  label="Account Holder Name"
-                  margin="normal"
-                  name="accountHolder"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.accountHolder}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  error={Boolean(formik.touched.accountNo && formik.errors.accountNo)}
-                  fullWidth
-                  helpertext={formik.touched.accountNo && formik.errors.accountNo}
-                  label="Country"
-                  margin="normal"
-                  name="Account No"
-                  type="number"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.accountNo}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  error={Boolean(formik.touched.ifsc && formik.errors.ifsc)}
-                  fullWidth
-                  helpertext={formik.touched.ifsc && formik.errors.ifsc}
-                  label="IFSC Code"
-                  margin="normal"
-                  name="ifsc"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  type="string"
-                  value={formik.values.ifsc}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  error={Boolean(formik.touched.upiId && formik.errors.upiId)}
-                  fullWidth
-                  helpertext={formik.touched.upiId && formik.errors.upiId}
-                  label="UPI ID"
-                  margin="normal"
-                  name="upiId"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  type="upiId"
-                  value={formik.values.password}
-                  variant="outlined"
-                />
-              </Grid>
-            </Grid>
-            <Box sx={{ my: 3 }}>
-              <Typography color="textSecondary" gutterBottom variant="h5">
-                Store Details
-              </Typography>
-            </Box>
-            <Grid container spacing={2}>
-              <Grid item xs={4}>
-                <TextField
-                  error={Boolean(formik.touched.storeManager && formik.errors.storeManager)}
-                  fullWidth
-                  helpertext={formik.touched.storeManager && formik.errors.storeManager}
-                  label="Store Manager"
-                  margin="normal"
-                  name="storeManager"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.storeManager}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  error={Boolean(formik.touched.categories && formik.errors.categories)}
-                  fullWidth
-                  helpertext={formik.touched.categories && formik.errors.categories}
-                  label="Store Category"
-                  margin="normal"
-                  name="categories"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.categories}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  error={Boolean(formik.touched.services && formik.errors.services)}
-                  fullWidth
-                  helpertext={formik.touched.services && formik.errors.services}
-                  label="Services"
-                  margin="normal"
-                  name="Account No"
-                  type="text"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.services}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  error={Boolean(formik.touched.liscenseNo && formik.errors.liscenseNo)}
-                  fullWidth
-                  helpertext={formik.touched.liscenseNo && formik.errors.liscenseNo}
-                  label="license No"
-                  margin="normal"
-                  name="liscenseNo"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  type="number"
-                  value={formik.values.liscenseNo}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  error={Boolean(formik.touched.licenseType && formik.errors.licenseType)}
-                  fullWidth
-                  helpertext={formik.touched.licenseType && formik.errors.licenseType}
-                  label="License Type"
-                  margin="normal"
-                  name="licenseType"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  type="string"
-                  value={formik.values.licenseType}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  error={Boolean(formik.touched.openingTime && formik.errors.openingTime)}
-                  fullWidth
-                  helpertext={formik.touched.openingTime && formik.errors.openingTime}
-                  label="Opening Time"
-                  margin="normal"
-                  name="openingTime"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  type="string"
-                  value={formik.values.openingTime}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  error={Boolean(formik.touched.closingTime && formik.errors.closingTime)}
-                  fullWidth
-                  helpertext={formik.touched.closingTime && formik.errors.closingTime}
-                  label="Closing Time"
-                  margin="normal"
-                  name="closingTime"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  type="string"
-                  value={formik.values.closingTime}
-                  variant="outlined"
-                />
-              </Grid>
-            </Grid>
-            <Box
-              sx={{
-                alignItems: "center",
-                display: "flex",
-                ml: -1,
+
+          <Box sx={{ my: 3 }}>
+            <Typography color="textPrimary" variant="h4">
+              Create a new account
+            </Typography>
+            <Typography color="textSecondary" gutterBottom variant="body2">
+              Use your email to create a new account
+            </Typography>
+          </Box>
+          {PageDisplay()}
+          <Box></Box>
+          <Box>
+            <Button color="primary" size="large"  variant="contained" sx={{margin:4}}
+              disabled={page == 0}
+              onClick={() => {
+                setPage((currPage) => currPage - 1);
               }}
             >
-              <Checkbox
-                checked={formik.values.policy}
-                name="policy"
-                onChange={formik.handleChange}
-              />
-              <Typography color="textSecondary" variant="body2">
-                I have read the{" "}
-                <NextLink href="/terms" passHref>
-                  <Link color="primary" underline="always" variant="subtitle2">
-                    Terms and Conditions
-                  </Link>
-                </NextLink>
-              </Typography>
-            </Box>
-            {Boolean(formik.touched.policy && formik.errors.policy) && (
-              <FormHelperText error>{formik.errors.policy}</FormHelperText>
-            )}
-            <Box sx={{ py: 2 }}>
-              <Button
-                color="primary"
-                disabled={formik.isSubmitting}
-                fullWidth
-                size="large"
-                type="submit"
-                variant="contained"
-              >
-                Sign Up Now
-              </Button>
-            </Box>
-            <Typography color="textSecondary" variant="body2">
-              Have an account?{" "}
-              <NextLink href="/login" passHref>
-                <Link variant="subtitle2" underline="hover">
-                  Sign In
-                </Link>
-              </NextLink>
-            </Typography>
-          </form>
+              Prev
+            </Button>
+            <Button color="primary" size="large" variant="contained"
+              onClick={() => {
+                if (page === FormTitles.length - 1) {
+                  alert("FORM SUBMITTED");
+                  console.log(formik.values);
+                  // console.log(formData);
+                } else {
+                  setPage((currPage) => currPage + 1);
+                }
+              }}
+            >
+              {page === FormTitles.length - 1 ? <Button
+              color="primary"
+              disabled={formik.isSubmitting}
+              fullWidth
+              size="large"
+              type="submit"
+              variant="contained"
+            >
+              Sign Up Now
+            </Button> : "Next"}
+            </Button>
+          </Box>
+          {Boolean(formik.touched.policy && formik.errors.policy) && (
+            <FormHelperText error>{formik.errors.policy}</FormHelperText>
+          )}
+          {/* <Box sx={{ py: 2 }}>
+            <Button
+              color="primary"
+              disabled={formik.isSubmitting}
+              fullWidth
+              size="large"
+              type="submit"
+              variant="contained"
+            >
+              Sign Up Now
+            </Button>
+          </Box>*/}
+          <Typography color="textSecondary" variant="body2">
+            Have an account?{" "}
+            <NextLink href="/login" passHref>
+              <Link variant="subtitle2" underline="hover">
+                Sign In
+              </Link>
+            </NextLink>
+          </Typography> 
         </Container>
       </Box>
     </>

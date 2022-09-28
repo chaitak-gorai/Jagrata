@@ -122,8 +122,9 @@ const Order = () => {
                       <TableCell>Address</TableCell>
                       <TableCell>Delivery</TableCell>
                       <TableCell>Time</TableCell>
-                      <TableCell>Cost</TableCell>
+                      <TableCell>Order Summary</TableCell>
                       <TableCell>Order Status</TableCell>
+                      <TableCell>Payment Status</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -315,18 +316,70 @@ const Order = () => {
                             variant="contained"
                             onClick={() => {
                               setActiveCost(ord._id);
+                              // setActive(ord._id);
                             }}
                           >
-                            Cost
+                            Summary
                           </Button>
                           <Modal
                             open={activeCost === ord._id}
                             onClose={() => {
                               setActiveCost("");
+                              // setActive("");
                             }}
                             aria-labelledby="modal-modal-title"
                             aria-describedby="modal-modal-description"
                           >
+                            {/* <Box sx={style}>
+                              <Table>
+                                <TableHead>
+                                  <TableRow>
+                                    <TableCell>Id</TableCell>
+                                    <TableCell>Image</TableCell>
+                                    <TableCell>Name</TableCell>
+                                    <TableCell>Quantity</TableCell>
+                                    <TableCell>Price</TableCell>
+                                    <TableCell>Gst</TableCell>
+                                  </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                  {ord.products.map((prod) => (
+                                    <TableRow key={prod._id}>
+                                      <TableCell>{prod._id}</TableCell>
+                                      {prod.productId != null ? (
+                                        <>
+                                          <TableCell>
+                                            <img
+                                              alt="Product"
+                                              src={`https://gravitybites.in${prod.productId.image}`}
+                                              width="40px"
+                                              height="40px"
+                                            />
+                                          </TableCell>
+                                          <TableCell>{prod.productId.name}</TableCell>
+                                        </>
+                                      ) : (
+                                        <>
+                                          <TableCell>
+                                            <img
+                                              alt="Product"
+                                              src={`https://gravitybites.in/uploads/carrot.jpg`}
+                                              width="40px"
+                                              height="40px"
+                                            />
+                                          </TableCell>
+                                          <TableCell>Product Name</TableCell>
+                                        </>
+                                      )}
+
+                                      <TableCell>{prod.quantity}</TableCell>
+                                      <TableCell>{prod.price}</TableCell>
+                                      <TableCell>{prod.gst}</TableCell>
+                                    </TableRow>
+                                  ))}
+                                </TableBody>
+                              </Table>
+                            </Box> */}
                             <Box sx={style}>
                               <Table>
                                 <TableHead>
@@ -359,6 +412,17 @@ const Order = () => {
                               </Table>
                             </Box>
                           </Modal>
+                        </TableCell>
+                        <TableCell>
+                          <SeverityPill
+                            color={
+                              (ord.status === "delivered" && "success") ||
+                              (ord.status === "refunded" && "error") ||
+                              "success"
+                            }
+                          >
+                            {ord.status.substr(6)}
+                          </SeverityPill>
                         </TableCell>
                         <TableCell>
                           <SeverityPill
