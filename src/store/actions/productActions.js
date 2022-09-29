@@ -53,7 +53,7 @@ export const createProduct = (formData) => async (dispatch, getState) => {
         variable: [
           {
             price: formData.price,
-            qty: formData.price,
+            qty: formData.quantity,
             discount: 0,
             unit: "Kg",
             inStock: true,
@@ -61,7 +61,7 @@ export const createProduct = (formData) => async (dispatch, getState) => {
           },
           {
             price: formData.price2,
-            qty: formData.price2,
+            qty: formData.quantity2,
             discount: 0,
             unit: "Kg",
             inStock: true,
@@ -69,7 +69,7 @@ export const createProduct = (formData) => async (dispatch, getState) => {
           },
           {
             price: formData.price3,
-            qty: formData.price3,
+            qty: formData.quantity3,
             discount: 0,
             unit: "Kg",
             inStock: true,

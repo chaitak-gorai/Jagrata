@@ -330,7 +330,7 @@ const Order = () => {
                             aria-labelledby="modal-modal-title"
                             aria-describedby="modal-modal-description"
                           >
-                            {/* <Box sx={style}>
+                            <Box sx={style}>
                               <Table>
                                 <TableHead>
                                   <TableRow>
@@ -379,8 +379,8 @@ const Order = () => {
                                   ))}
                                 </TableBody>
                               </Table>
-                            </Box> */}
-                            <Box sx={style}>
+                            {/* </Box>
+                            <Box sx={style}> */}
                               <Table>
                                 <TableHead>
                                   <TableRow>
