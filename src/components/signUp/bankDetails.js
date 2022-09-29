@@ -105,74 +105,44 @@ const BankDetails = () => {
             <Grid container spacing={2}>
               <Grid item xs={4}>
                 <TextField
-                  error={Boolean(formik.touched.bankName && formik.errors.bankName)}
-                  fullWidth
-                  helpertext={formik.touched.bankName && formik.errors.bankName}
                   label="Bank Name"
                   margin="normal"
                   name="bankName"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.bankName}
                   variant="outlined"
                 />
               </Grid>
               <Grid item xs={4}>
                 <TextField
-                  error={Boolean(formik.touched.accountHolder && formik.errors.accountHolder)}
-                  fullWidth
-                  helpertext={formik.touched.accountHolder && formik.errors.accountHolder}
                   label="Account Holder Name"
                   margin="normal"
                   name="accountHolder"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.accountHolder}
                   variant="outlined"
                 />
               </Grid>
               <Grid item xs={4}>
                 <TextField
-                  error={Boolean(formik.touched.accountNo && formik.errors.accountNo)}
-                  fullWidth
-                  helpertext={formik.touched.accountNo && formik.errors.accountNo}
                   label="Country"
                   margin="normal"
                   name="Account No"
                   type="number"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.accountNo}
                   variant="outlined"
                 />
               </Grid>
               <Grid item xs={4}>
                 <TextField
-                  error={Boolean(formik.touched.ifsc && formik.errors.ifsc)}
-                  fullWidth
-                  helpertext={formik.touched.ifsc && formik.errors.ifsc}
                   label="IFSC Code"
                   margin="normal"
                   name="ifsc"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
                   type="string"
-                  value={formik.values.ifsc}
                   variant="outlined"
                 />
               </Grid>
               <Grid item xs={4}>
                 <TextField
-                  error={Boolean(formik.touched.upiId && formik.errors.upiId)}
-                  fullWidth
-                  helpertext={formik.touched.upiId && formik.errors.upiId}
                   label="UPI ID"
                   margin="normal"
                   name="upiId"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
                   type="upiId"
-                  value={formik.values.password}
                   variant="outlined"
                 />
               </Grid>

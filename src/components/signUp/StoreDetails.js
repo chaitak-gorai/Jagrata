@@ -105,14 +105,9 @@ const StoreDetails = () => {
             <Grid container spacing={2}>
               <Grid item xs={4}>
                 <TextField
-                  error={Boolean(formik.touched.storeManager && formik.errors.storeManager)}
-                  fullWidth
-                  helpertext={formik.touched.storeManager && formik.errors.storeManager}
                   label="Store Manager"
                   margin="normal"
                   name="storeManager"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
                   value={formik.values.storeManager}
                   variant="outlined"
                 />
