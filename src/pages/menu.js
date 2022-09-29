@@ -33,6 +33,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useFormik } from "formik";
+import AlertDialog from "src/components/Confirm";
 
 const Menu = () => {
   const router = useRouter();
@@ -113,7 +114,6 @@ const Menu = () => {
             <Grid container spacing={3}>
               <Grid item lg={12} md={6} xs={12}>
                 <Card>
-              
                   <Box
                     component="main"
                     sx={{
@@ -186,7 +186,7 @@ const Menu = () => {
                   </Box>
 
                   <Divider />
-                  
+
                   <CardContent>
                     {msg != "" ? <Alert severity="success">{msg}</Alert> : ""}
                     <TableContainer component={Paper}>
@@ -207,8 +207,9 @@ const Menu = () => {
                               <TableCell align="center">{row.productName}</TableCell>
                               <TableCell align="center">{row.productPrice}</TableCell>
                               <TableCell align="center">
-                                <DeleteIcon
-                                  onClick={async () => {
+                                <AlertDialog
+                                  msg={"Are you sure you want to delete this item?"}
+                                  onConfirm={async () => {
                                     const config = {
                                       headers: {
                                         "Content-Type": "application/json",
@@ -222,7 +223,9 @@ const Menu = () => {
                                     );
                                     setMsg(`${row.productName} Deleted`);
                                   }}
-                                />
+                                >
+                                  <DeleteIcon />
+                                </AlertDialog>
                               </TableCell>
                             </TableRow>
                           ))}

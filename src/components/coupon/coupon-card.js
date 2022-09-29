@@ -7,6 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import AlertDialog from "../Confirm";
 export const CouponCard = ({ coupons, setMsg, ...rest }) => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -23,10 +24,9 @@ export const CouponCard = ({ coupons, setMsg, ...rest }) => {
       style={{ backgroundColor: "#fff" }}
     >
       <CardContent>
-        <DeleteIcon
-          style={{ width: "200%", textAlign: "right" }}
-          fontSize="large"
-          onClick={async () => {
+        <AlertDialog
+          msg={"Are you sure you want to delete this coupon?"}
+          onConfirm={async () => {
             const config = {
               headers: {
                 "Content-Type": "application/json",
@@ -40,7 +40,10 @@ export const CouponCard = ({ coupons, setMsg, ...rest }) => {
             );
             setMsg(` Coupon ${coupons._id} Deleted`);
           }}
-        />
+        >
+          <DeleteIcon />
+        </AlertDialog>
+
         <Box
           sx={{
             display: "flex",
@@ -48,7 +51,7 @@ export const CouponCard = ({ coupons, setMsg, ...rest }) => {
             pb: 3,
           }}
         >
-          <Avatar alt="coupons" src={`https://gravitybites.in/${coupons.image}`} variant="square" />
+          <Avatar alt="coupons" src={`https://gravitybites.in${coupons.image}`} variant="square" />
         </Box>
         <Typography align="center" color="textPrimary" gutterBottom variant="h5">
           {coupons.category}

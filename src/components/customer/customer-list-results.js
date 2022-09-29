@@ -34,6 +34,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import UpdateProduct from "./UpdateProduct";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import AlertDialog from "../Confirm";
 export const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
@@ -268,24 +269,27 @@ export const CustomerListResults = ({ products, subCat, setMess, ...rest }) => {
                       </Box>
                     </Modal>
                   </TableCell>
-                  <TableCell
-                    onClick={async () => {
-                      const config = {
-                        headers: {
-                          "Content-Type": "application/json",
-                          Authorization: `Bearer ${userInfo.token}`,
-                        },
-                      };
-                      const id = product._id;
-                      const { data } = await axios.delete(
-                        `https://gravitybites.in/api/products/delete-product/${id}`,
-                        config
-                      );
-                      setMess(data.mess);
-                      console.log(data);
-                    }}
-                  >
-                    <DeleteOutline />{" "}
+                  <TableCell>
+                    <AlertDialog
+                      msg={"Are you sure want to delete this product?"}
+                      onConfirm={async () => {
+                        const config = {
+                          headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${userInfo.token}`,
+                          },
+                        };
+                        const id = product._id;
+                        const { data } = await axios.delete(
+                          `https://gravitybites.in/api/products/delete-product/${id}`,
+                          config
+                        );
+                        setMess(data.mess);
+                        console.log(data);
+                      }}
+                    >
+                      <DeleteOutline />
+                    </AlertDialog>
                   </TableCell>
                 </TableRow>
               ))}
