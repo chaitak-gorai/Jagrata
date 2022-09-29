@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import { getProducts } from "src/store/actions/productActions";
 import { listMyOrder } from "src/store/actions/ordersActions";
 import { margin } from "@mui/system";
+import axios from "axios";
 
 const Dashboard = () => {
   const router = useRouter();
@@ -54,7 +55,7 @@ const Dashboard = () => {
         }}
       >
         <Container maxWidth={false}>
-        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <ToggleButtonGroup
               sx={{ mt: 3, mb: 3 }}
               color="primary"
@@ -63,7 +64,26 @@ const Dashboard = () => {
               // onChange={handleChange}
               aria-label="Platform"
             >
-              <ToggleButton value="admin">Online</ToggleButton>
+              <ToggleButton
+                value="admin"
+                onClick={async () => {
+                  const config = {
+                    headers: {
+                      Authorization: `Bearer ${userInfo.token}`,
+                    },
+                  };
+                  await axios
+                    .put("https://gravitybites.in/api/stores/goOnline", config)
+                    .then((res) => {
+                      console.log(res);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                }}
+              >
+                Online
+              </ToggleButton>
               <ToggleButton value="vendor">Offline</ToggleButton>
             </ToggleButtonGroup>
           </Box>
@@ -77,7 +97,6 @@ const Dashboard = () => {
               alignItems: "center",
             }}
           >
-                    
             <Grid item>
               <Budget text={"orders"} value={orders ? Object.keys(orders).length : 0} />
             </Grid>

@@ -157,13 +157,13 @@ export const DashboardSidebar = (props) => {
                 <Typography color="inherit" variant="subtitle1">
                   Wallet Amount
                 </Typography>
-                <Typography color="neutral.400" variant="body2">
+                <Typography color="neutral.900" variant="body2">
                   {walletAmount}
                 </Typography>
               </div>
               <SelectorIcon
                 sx={{
-                  color: "neutral.500",
+                  color: "neutral.900",
                   width: 14,
                   height: 14,
                 }}
@@ -194,8 +194,8 @@ export const DashboardSidebar = (props) => {
         open
         PaperProps={{
           sx: {
-            backgroundColor: "neutral.900",
-            color: "#FFFFFF",
+            backgroundColor: "neutral.100",
+            color: "black",
             width: 280,
           },
         }}
@@ -213,8 +213,8 @@ export const DashboardSidebar = (props) => {
       open={open}
       PaperProps={{
         sx: {
-          backgroundColor: "neutral.900",
-          color: "#FFFFFF",
+          backgroundColor: "neutral.100",
+          color: "black",
           width: 280,
         },
       }}
