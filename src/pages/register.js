@@ -16,6 +16,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { register } from "src/store/actions/userActions";
+import { useDispatch } from "react-redux";
+import router from "next/router";
 export default function App() {
   const [data, setData] = useState({
     email: "",
@@ -51,7 +54,7 @@ export default function App() {
   });
   const [currentStep, setCurrentStep] = useState(0);
   const [errors, setErrors] = useState({});
-
+  
   const makeRequest = (formData) => {
     console.log("Form Submitted", formData);
   };
@@ -423,8 +426,11 @@ const StoreDetailsValidationSchema = Yup.object({
 });
 
 const StoreDetails = (props) => {
+  const dispatch=useDispatch();
   const handleSubmit = (values) => {
     props.next(values);
+    dispatch(register(values));
+    router.push("/login");
   };
 
   return (
@@ -543,9 +549,9 @@ const StoreDetails = (props) => {
                   }}
                 >
                   <Checkbox
-                    // checked={formik.values.policy}
+                    // checked={.values.policy}
                     name="policy"
-                    // onChange={formik.handleChange}
+                    // onChange={.handleChange}
                   />
                   <Typography color="textSecondary" variant="body2">
                     I have read the{" "}
@@ -593,7 +599,7 @@ const UploadValidationSchema = Yup.object({
 
 const Uploads = (props) => {
   const handleSubmit = (values) => {
-    props.next(values, true);
+    props.next(values);
   };
 
   return (
@@ -602,7 +608,7 @@ const Uploads = (props) => {
       initialValues={props.data}
       onSubmit={handleSubmit}
     >
-      {({ values }) => (
+      {({ values,setFieldValue }) => (
         <Form>
           <Box sx={{ my: 3 }}>
             <Typography color="textSecondary" gutterBottom variant="h5">
@@ -620,14 +626,15 @@ const Uploads = (props) => {
                   id="cancelledCheque"
                   type="file"
                   style={{ display: "none" }}
+                  
                   onChange={(e) => {
                     setFieldValue("cancelledCheque", e.target.files[0]);
                     console.log(e.target.files[0].name);
                   }}
                 />
                 <Typography variant="body2">
-                  {values.cancelledCheque
-                    ? values.cancelledCheque.name
+                  {props.data.cancelledCheque
+                    ? props.data.cancelledCheque.name
                     : "No file chosen"}
                 </Typography>
               </label>
@@ -638,9 +645,9 @@ const Uploads = (props) => {
                   variant="contained"
                   component="span"
                   color="primary"
-                  // error={Boolean(formik.touched.uploadMenu && formik.errors.uploadMenu)}
-                  // helpertext={formik.touched.uploadMenu && formik.errors.uploadMenu}
-                  // onChange={formik.handleChange}
+                  // error={Boolean(.touched.uploadMenu && .errors.uploadMenu)}
+                  // helpertext={.touched.uploadMenu && .errors.uploadMenu}
+                  // onChange={.handleChange}
                   fullWidth
                 >
                   Upload Menu
@@ -656,7 +663,7 @@ const Uploads = (props) => {
                   }}
                 />
                 <Typography variant="body2">
-                  {values.uploadMenu ? values.uploadMenu.name : "No file chosen"}
+                  {props.data.uploadMenu ? props.data.uploadMenu.name : "No file chosen"}
                 </Typography>
               </label>
             </Grid>
@@ -666,9 +673,9 @@ const Uploads = (props) => {
                   variant="contained"
                   component="span"
                   color="primary"
-                  // error={Boolean(formik.touched.uploadPan && formik.errors.uploadPan)}
-                  // helpertext={formik.touched.uploadPan && formik.errors.uploadPan}
-                  // onChange={formik.handleChange}
+                  // error={Boolean(.touched.uploadPan && .errors.uploadPan)}
+                  // helpertext={.touched.uploadPan && .errors.uploadPan}
+                  // onChange={.handleChange}
                   fullWidth
                 >
                   Upload Pan
@@ -684,7 +691,7 @@ const Uploads = (props) => {
                   }}
                 />
                 <Typography variant="body2">
-                  {/* {values.uploadPan ? formik.values.uploadPan.name : "No file chosen"} */}
+                  {props.data.uploadPan ? props.data.uploadPan.name : "No file chosen"}
                 </Typography>
               </label>
             </Grid>
@@ -694,9 +701,9 @@ const Uploads = (props) => {
                   variant="contained"
                   component="span"
                   color="primary"
-                  // error={Boolean(formik.touched.licenseImage && formik.errors.licenseImage)}
-                  // helpertext={formik.touched.licenseImage && formik.errors.licenseImage}
-                  // onChange={formik.handleChange}
+                  // error={Boolean(.touched.licenseImage && .errors.licenseImage)}
+                  // helpertext={.touched.licenseImage && .errors.licenseImage}
+                  // onChange={.handleChange}
                   fullWidth
                 >
                   Upload License
@@ -707,14 +714,14 @@ const Uploads = (props) => {
                   type="file"
                   style={{ display: "none" }}
                   onChange={(e) => {
-                    // formik.setFieldValue("licenseImage", e.target.files[0]);
+                    setFieldValue("licenseImage", e.target.files[0]);
                     console.log(e.target.files[0].name);
                   }}
                 />
                 <Typography variant="body2">
-                  {/* {formik.values.licenseImage
-                      ? formik.values.licenseImage.name
-                      : "No file chosen"} */}
+                  {props.data.licenseImage
+                      ? props.data.licenseImage.name
+                      : "No file chosen"}
                 </Typography>
               </label>
             </Grid>
@@ -724,9 +731,9 @@ const Uploads = (props) => {
                   variant="contained"
                   component="span"
                   color="primary"
-                  // error={Boolean(formik.touched.gst && formik.errors.gst)}
-                  // helpertext={formik.touched.gst && formik.errors.gst}
-                  // onChange={formik.handleChange}
+                  // error={Boolean(.touched.gst && .errors.gst)}
+                  // helpertext={.touched.gst && .errors.gst}
+                  // onChange={.handleChange}
                   fullWidth
                 >
                   Upload GST
@@ -736,13 +743,13 @@ const Uploads = (props) => {
                   id="gst"
                   type="file"
                   style={{ display: "none" }}
-                  // onChange={(e) => {
-                  //   formik.setFieldValue("gst", e.target.files[0]);
-                  //   console.log(e.target.files[0].name);
-                  // }}
+                  onChange={(e) => {
+                    setFieldValue("gst", e.target.files[0]);
+                    console.log(e.target.files[0].name);
+                  }}
                 />
                 <Typography variant="body2">
-                  {values.gst ? values.gst.name : "No file chosen"}
+                  {props.data.gst ? props.data.gst.name : "No file chosen"}
                 </Typography>
               </label>
             </Grid>
@@ -752,9 +759,9 @@ const Uploads = (props) => {
                   variant="contained"
                   component="span"
                   color="primary"
-                  // error={Boolean(formik.touched.storeImage && formik.errors.storeImage)}
-                  // helpertext={formik.touched.storeImage && formik.errors.storeImage}
-                  // onChange={formik.handleChange}
+                  // error={Boolean(.touched.storeImage && .errors.storeImage)}
+                  // helpertext={.touched.storeImage && .errors.storeImage}
+                  // onChange={.handleChange}
                   fullWidth
                 >
                   Upload Store Image
@@ -770,7 +777,7 @@ const Uploads = (props) => {
                   }}
                 />
                 <Typography variant="body2">
-                  {values.storeImage ? values.storeImage.name : "No file chosen"}
+                  {props.data.storeImage ? props.data.storeImage.name : "No file chosen"}
                 </Typography>
               </label>
             </Grid>
@@ -779,7 +786,11 @@ const Uploads = (props) => {
           <Button type="button" onClick={() => props.prev(values)}>
             Back
           </Button>
-          <Button type="submit">Next</Button>
+          <Button color="primary"
+                  size="large"
+                  variant="contained"
+                  sx={{ margin: 4 }}
+                  type="submit">Next</Button>
         </Form>
       )}
     </Formik>
