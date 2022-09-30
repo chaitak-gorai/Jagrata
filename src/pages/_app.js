@@ -11,6 +11,9 @@ import { store } from "../store/store";
 import { persistor } from "../store/store";
 import { PersistGate } from "redux-persist/integration/react";
 import "src/components/style.css";
+import "../../index.css"
+import "../../styles/globals.css"
+import 'bootstrap/dist/css/bootstrap.css';
 const clientSideEmotionCache = createEmotionCache();
 
 const App = (props) => {

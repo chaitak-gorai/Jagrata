@@ -1,28 +1,28 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { ROUTES } from "../../routes/RouterConfig";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Footer from "../../components/Footer";
-import Header from "../../components/Header";
-import GooglePlay from "../../assets/images/google-play-logo.jpg";
-import ApplePlay from "../../assets/images/apple.png";
-import First from "../../assets/images/choose.jpg";
-import Second from "../../assets/images/happy.jpg";
-import Third from "../../assets/images/deli.jpg";
-
-import Mob1 from "../../assets/images/mob1.png";
-import Mob2 from "../../assets/images/mob2.png";
-import Mob3 from "../../assets/images/mob3.png";
+// import Footer from "../../components/Footer";
+// import Header from "../../components/Header";
+import GooglePlay from "../assets/images/google-play-logo.jpg";
+import ApplePlay from "../assets/images/apple.png";
+import First from "../assets/images/choose.jpg";
+import Second from "../assets/images/happy.jpg";
+import Third from "../assets/images/deli.jpg";
+// import "../components/style.css"
+import Mob1 from "../assets/images/mob1.png";
+import Mob2 from "../assets/images/mob2.png";
+import Mob3 from "../assets/images/mob3.png";
 import { useRouter } from "next/router";
+import 'bootstrap/dist/css/bootstrap.css';
+import Image from 'next/image'
 
 const Home = () => {
   const router = useRouter();
 
   return (
     <div className="Home">
-      <Header />
+      {/* <Header /> */}
       <Container fluid="sm">
         <div className="text-center">
           <h1 className="text-6xl text-center font-bold mb-4 pt-32">
@@ -33,13 +33,13 @@ const Home = () => {
             Register in our app , and get started in no time.
           </h2>
           <div className="flex justify-center py-12">
-            <img className="w-40 h-16 mr-6" src={GooglePlay} />
-            <img className="w-40 h-16" src={ApplePlay} />
+            <Image className="w-20 h-16 mr-6" src={GooglePlay} />
+            <Image className="w-20 h-16" src={ApplePlay} />
           </div>
           <div className=" flex py-12 justify-center">
-            <img className="w-full h-auto lg:w-3/12 md:w-3/12" src={Mob2} />
-            <img className="w-full h-auto lg:w-3/12 md:w-3/12" src={Mob1} />
-            <img className="w-full h-auto lg:w-3/12 md:w-3/12" src={Mob3} />
+            <Image className="w-full h-auto lg:w-3/12 md:w-3/12" src={Mob2} />
+            <Image className="w-full h-auto lg:w-3/12 md:w-3/12" src={Mob1} />
+            <Image className="w-full h-auto lg:w-3/12 md:w-3/12" src={Mob3} />
           </div>
         </div>
         {/* <button className={`bg-[#3498db] p-[10px] text-[white] rounded-md hover:bg-[red] hover:text-[#3498db]`} onClick={()=>{changeDir(ROUTES.About)}}>Go To About</button> */}
@@ -108,7 +108,7 @@ const Home = () => {
           <Row className="mt-24">
             <Col sm={4}>
               <div className="w-80  m-auto shadow-xl rounded-3xl mb-4 bg-[#f3f3f3]">
-                <img src={First} className="w-full h-72 rounded-t-3xl" alt="..." />
+                <Image src={First} className="w-full h-72 rounded-t-3xl" alt="..." />
                 <div className="px-4 py-8  text-center">
                   <h5 className="text-2xl text-black-500 font-bold mb-4 text-center">
                     Choose what you want
@@ -119,7 +119,7 @@ const Home = () => {
             </Col>
             <Col sm={4}>
               <div className="w-80 m-auto shadow-xl rounded-3xl  mb-4 scale-125 bg-[#f3f3f3]">
-                <img src={Second} className="w-full h-72 rounded-t-3xl" alt="..." />
+                <Image src={Second} className="w-full h-72 rounded-t-3xl" alt="..." />
                 <div className="px-4 py-8  text-center">
                   <h5 className="text-2xl text-black-500 font-bold  mb-4 text-center">
                     See real-time updates
@@ -130,7 +130,7 @@ const Home = () => {
             </Col>
             <Col sm={4}>
               <div className="w-80  m-auto shadow-xl rounded-3xl  mb-4 bg-[#f3f3f3]">
-                <img src={Third} className="w-full h-72 rounded-t-3xl" alt="..." />
+                <Image src={Third} className="w-full h-72 rounded-t-3xl" alt="..." />
                 <div className="px-4 py-8 text-center">
                   <h5 className="text-2xl text-black-500 font-bold  mb-4 text-center">
                     Get you items same-day
@@ -150,7 +150,7 @@ const Home = () => {
           </h3>
         </Container>
       </section>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };
