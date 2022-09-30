@@ -6,8 +6,9 @@ import {
   stepContentClasses,
   TextField,
   Typography,
+  Alert
 } from "@mui/material";
-import React from "react";
+import React,{useState} from "react";
 import NextLink from "next/link";
 import router, { useRouter } from "next/router";
 import { useFormik } from "formik";
@@ -16,10 +17,11 @@ import { DateTimePicker } from "@mui/lab";
 import { createVendorCoupons } from "src/store/actions/couponsActions";
 import { useDispatch, useSelector } from "react-redux";
 import { createProduct } from "src/store/actions/productActions";
-const CreateProduct = ({ onclose }) => {
+const CreateProduct = ({ onclose,sendMessage }) => {
   const dispatch = useDispatch();
-  const createCoupon = useSelector((state) => state.createProduct);
-  const { loading, error, message } = createCoupon;
+  const createnewProduct = useSelector((state) => state.createProduct);
+  const { loading, error, message } = createnewProduct;
+  const [msg, setMsg] = useState("");
   const formik = useFormik({
     initialValues: {
       category: "",
@@ -54,7 +56,7 @@ const CreateProduct = ({ onclose }) => {
     onSubmit: () => {
       dispatch(createProduct(formik.values));
       onclose();
-      console.log(message);
+      sendMessage(message);
     },
   });
 
@@ -294,6 +296,7 @@ const CreateProduct = ({ onclose }) => {
               Create Now
             </Button>
           </Box>
+          
         </form>
       </Container>
     </Box>

@@ -23,6 +23,7 @@ const Products = () => {
   const { userInfo } = userLogin;
   const [subcatType, setSubcatType] = useState("Vegetables");
   const [mess, setMess] = useState("");
+  const [msg, setMsg] = useState("");
   const handleChange = (event, newSubcatType) => {
     if (newSubcatType !== null) {
       setSubcatType(newSubcatType);
@@ -50,6 +51,7 @@ const Products = () => {
         config
       );
       setSubcat(data.mess);
+      console.log(data.mess);
     };
     getSubcat();
   }, [userInfo, dispatch, router, onclose, mess]);
