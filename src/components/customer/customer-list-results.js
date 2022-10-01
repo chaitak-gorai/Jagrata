@@ -17,6 +17,7 @@ import {
   TablePagination,
   TableRow,
   Typography,
+  Alert
 } from "@mui/material";
 import { getInitials } from "../../utils/get-initials";
 import { SeverityPill } from "../severity-pill";
@@ -79,6 +80,7 @@ export const CustomerListResults = ({ products, subCat, setMess, ...rest }) => {
   const [page, setPage] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const [msg,setMsg]=useState("");
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -139,7 +141,9 @@ export const CustomerListResults = ({ products, subCat, setMess, ...rest }) => {
     p: 4,
   };
   return (
+    
     <Card {...rest}>
+       {msg != "" ? <Alert severity="success">{msg}</Alert> : ""}
       <PerfectScrollbar>
         <Box sx={{ minWidth: 1050 }}>
           <Table>
@@ -265,7 +269,7 @@ export const CustomerListResults = ({ products, subCat, setMess, ...rest }) => {
                       aria-describedby="modal-modal-description"
                     >
                       <Box sx={style}>
-                        <UpdateProduct onclose={handleClose2} product={product} />
+                        <UpdateProduct onclose={handleClose2} product={product} sendMessage={setMsg}/>
                       </Box>
                     </Modal>
                   </TableCell>

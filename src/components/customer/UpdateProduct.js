@@ -17,7 +17,9 @@ import { createVendorCoupons } from "src/store/actions/couponsActions";
 import { useDispatch, useSelector } from "react-redux";
 import { createProduct, getProducts } from "src/store/actions/productActions";
 import axios from "axios";
-const UpdateProduct = ({ onclose, product }) => {
+
+const UpdateProduct = ({ onclose, product, sendMessage }) => {
+  // const [msg, setMsg] = useState("");
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -105,6 +107,7 @@ const UpdateProduct = ({ onclose, product }) => {
       );
       console.log(data);
       onclose();
+      sendMessage(`${data.mess}`);
       // console.log(message);
     },
   });
@@ -342,7 +345,7 @@ const UpdateProduct = ({ onclose, product }) => {
               type="submit"
               variant="contained"
             >
-              Create Now
+              Update Now
             </Button>
           </Box>
         </form>
