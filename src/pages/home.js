@@ -2,8 +2,8 @@ import React from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-// import Footer from "../../components/Footer";
-// import Header from "../../components/Header";
+import Footer from "../components/footer";
+import Header from "../components/header";
 import GooglePlay from "../assets/images/google-play-logo.jpg";
 import ApplePlay from "../assets/images/apple.png";
 import First from "../assets/images/choose.jpg";
@@ -14,15 +14,15 @@ import Mob1 from "../assets/images/mob1.png";
 import Mob2 from "../assets/images/mob2.png";
 import Mob3 from "../assets/images/mob3.png";
 import { useRouter } from "next/router";
-import 'bootstrap/dist/css/bootstrap.css';
-import Image from 'next/image'
+import "bootstrap/dist/css/bootstrap.css";
+import Image from "next/image";
 
 const Home = () => {
   const router = useRouter();
 
   return (
     <div className="Home">
-      {/* <Header /> */}
+      <Header />
       <Container fluid="sm">
         <div className="text-center">
           <h1 className="text-6xl text-center font-bold mb-4 pt-32">
@@ -33,8 +33,10 @@ const Home = () => {
             Register in our app , and get started in no time.
           </h2>
           <div className="flex justify-center py-12">
-            <Image className="w-20 h-16 mr-6" src={GooglePlay} />
-            <Image className="w-20 h-16" src={ApplePlay} />
+            <div className="w-60 h-32">      
+              <Image className="w-20 h-16 mr-6" src={GooglePlay} />
+              <Image className="w-20 h-16" size={20} src={ApplePlay} />
+            </div>
           </div>
           <div className=" flex py-12 justify-center">
             <Image className="w-full h-auto lg:w-3/12 md:w-3/12" src={Mob2} />
@@ -150,7 +152,7 @@ const Home = () => {
           </h3>
         </Container>
       </section>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };
