@@ -39,6 +39,7 @@ export const CouponCard = ({ coupons, setMsg, ...rest }) => {
               config
             );
             setMsg(` Coupon ${coupons._id} Deleted`);
+            console.log(data.mess)
           }}
         >
           <DeleteIcon />

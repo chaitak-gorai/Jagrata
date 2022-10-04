@@ -1,12 +1,8 @@
 import {
   Box,
   Button,
-  Card,
-  CardContent,
-  TextField,
-  InputAdornment,
-  SvgIcon,
   Typography,
+  Alert
 } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import { Download as DownloadIcon } from "../../icons/download";
@@ -30,6 +26,7 @@ export const CouponListToolbar = (props) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [msg,setMsg]=React.useState("");
   return (
     <Box>
       <Box
@@ -43,6 +40,7 @@ export const CouponListToolbar = (props) => {
       >
         <Typography sx={{ m: 1 }} variant="h4">
           Coupons
+          {msg != "" ? <Alert severity="success">{msg}</Alert> : ""}
         </Typography>
         <Box sx={{ m: 1 }}>
           <Button color="primary" variant="contained" onClick={handleOpen}>
@@ -55,7 +53,7 @@ export const CouponListToolbar = (props) => {
             aria-describedby="modal-modal-description"
           >
             <Box sx={style}>
-              <CouponInput onclose={handleClose} />
+              <CouponInput onclose={handleClose} showMsg={setMsg}/>
             </Box>
           </Modal>
         </Box>

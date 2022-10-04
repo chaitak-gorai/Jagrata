@@ -15,7 +15,7 @@ import * as Yup from "yup";
 import { DateTimePicker } from "@mui/lab";
 import { createVendorCoupons } from "src/store/actions/couponsActions";
 import { useDispatch, useSelector } from "react-redux";
-const CouponInput = ({ onclose }) => {
+const CouponInput = ({ onclose,showMsg }) => {
   const dispatch = useDispatch();
   const createCoupon = useSelector((state) => state.createVendorCoupons);
   const { loading, error, message } = createCoupon;
@@ -38,6 +38,7 @@ const CouponInput = ({ onclose }) => {
     onSubmit: () => {
       dispatch(createVendorCoupons(formik.values));
       onclose();
+      showMsg(message);
     },
   });
 
