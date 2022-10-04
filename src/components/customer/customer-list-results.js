@@ -2,23 +2,7 @@ import { useState } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import PropTypes from "prop-types";
 import { format } from "date-fns";
-import {
-  Avatar,
-  Box,
-  Button,
-  Card,
-  Checkbox,
-  MenuItem,
-  Modal,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TablePagination,
-  TableRow,
-  Typography,
-  Alert
-} from "@mui/material";
+import {  Avatar,  Box,  Button,  Card,  Checkbox,  MenuItem,  Modal,  Table,  TableBody,  TableCell,  TableHead,  TablePagination,  TableRow, Typography,  Alert} from "@mui/material";
 import { getInitials } from "../../utils/get-initials";
 import { SeverityPill } from "../severity-pill";
 import { Grid } from "react-bootstrap";
@@ -26,12 +10,6 @@ import { ArrowDropDown, DeleteOutline } from "@mui/icons-material";
 
 import Menu from "@mui/material/Menu";
 import { styled, alpha } from "@mui/material/styles";
-import EditIcon from "@mui/icons-material/Edit";
-import Divider from "@mui/material/Divider";
-import ArchiveIcon from "@mui/icons-material/Archive";
-import FileCopyIcon from "@mui/icons-material/FileCopy";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import UpdateProduct from "./UpdateProduct";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -144,8 +122,8 @@ export const CustomerListResults = ({ products, subCat, setMess, ...rest }) => {
     
     <Card {...rest}>
        {msg != "" ? <Alert severity="success">{msg}</Alert> : ""}
-      <PerfectScrollbar>
-        <Box sx={{ minWidth: 1050 }}>
+      {/* <PerfectScrollbar> */}
+        <Box sx={{overflow:"scroll" }}>
           <Table>
             <TableHead>
               <TableRow>
@@ -289,6 +267,7 @@ export const CustomerListResults = ({ products, subCat, setMess, ...rest }) => {
                           config
                         );
                         setMess(data.mess);
+                        setMsg(data.mess);
                         console.log(data);
                       }}
                     >
@@ -300,7 +279,7 @@ export const CustomerListResults = ({ products, subCat, setMess, ...rest }) => {
             </TableBody>
           </Table>
         </Box>
-      </PerfectScrollbar>
+      {/* </PerfectScrollbar> */}
       <TablePagination
         component="div"
         count={products.length}
