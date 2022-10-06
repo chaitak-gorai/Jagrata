@@ -10,6 +10,7 @@ import { Google as GoogleIcon } from "../icons/google";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { login } from "src/store/actions/userActions";
+import Header from "src/components/header";
 
 const Login = () => {
   const router = useRouter();
@@ -46,6 +47,7 @@ const Login = () => {
       <Head>
         <title>Login </title>
       </Head>
+      <Header/>
       <Box
         component="main"
         sx={{

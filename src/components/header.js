@@ -17,8 +17,8 @@ function Header() {
             className="ml-auto"
             navbarScroll
           >
-            <Nav.Link href="/" className='font-semibold text-black text-md mr-4'>Login</Nav.Link>
-            <Nav.Link href="#" className='font-semibold text-black text-md ml-4'>Register</Nav.Link>
+            <Nav.Link href="/login" className='font-semibold text-black text-md mr-4'>Login</Nav.Link>
+            <Nav.Link href="/register" className='font-semibold text-black text-md ml-4'>Register</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

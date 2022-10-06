@@ -19,6 +19,7 @@ import {
 import { register } from "src/store/actions/userActions";
 import { useDispatch } from "react-redux";
 import router from "next/router";
+import Header from "src/components/header";
 export default function App() {
   const [data, setData] = useState({
     email: "",
@@ -86,6 +87,7 @@ export default function App() {
 
   return (
     <>
+    <Header/>
       <Container>
         <Box sx={{ my: 3 }}>
           <Typography color="textPrimary" variant="h4">
