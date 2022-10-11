@@ -41,7 +41,7 @@ export const Budget = (props) => (
               <Icon sx={{position: "absolute",
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "center",fontSize:"70px"}} >{props.icon}</Icon>
+                justifyContent: "center",fontSize:"70px",color:"blue"}} >{props.icon}</Icon>
             </Box>
           </Box>
         </Grid>
