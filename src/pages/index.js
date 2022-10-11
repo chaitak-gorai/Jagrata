@@ -18,6 +18,9 @@ import { getProducts } from "src/store/actions/productActions";
 import { listMyOrder } from "src/store/actions/ordersActions";
 import { margin } from "@mui/system";
 import axios from "axios";
+import { ShoppingBag as ShoppingBagIcon } from "../icons/shopping-bag";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 const Dashboard = () => {
   const router = useRouter();
@@ -98,18 +101,18 @@ const Dashboard = () => {
             }}
           >
             <Grid item>
-              <Budget text={"orders"} value={orders ? Object.keys(orders).length : 0} />
+              <Budget text={"orders"} value={orders ? Object.keys(orders).length : 0} icon={<ShoppingCartIcon/>}/>
             </Grid>
             <Grid item>
-              <Budget text={"products"} value={orders ? Object.keys(products).length : 0} />
+              <Budget text={"products"} value={orders ? Object.keys(products).length : 0} icon={<ShoppingBagIcon/>}/>
             </Grid>
             <Grid item>
-              <Budget text={"Admin Coupons"} value={orders ? Object.keys(coupons).length : 0} />
+              <Budget text={"Admin Coupons"} value={orders ? Object.keys(coupons).length : 0} icon={<LocalOfferIcon/>}/>
             </Grid>
             <Grid item>
               <Budget
                 text={"Vendor Coupons"}
-                value={orders ? Object.keys(vendorCoupons).length : 0}
+                value={orders ? Object.keys(vendorCoupons).length : 0} icon={<LocalOfferIcon/>}
               />
             </Grid>
           </Grid>
